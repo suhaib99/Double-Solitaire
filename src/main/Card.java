@@ -15,11 +15,24 @@ public class Card {
         this.number = number;
     }
 
-    int getNumber() {
+    private int getNumber() {
         return this.number;
     }
 
-    int getSuit() {
+    private int getSuit() {
         return suit;
+    }
+
+    int[] toArray(){
+        int[] suitNumber = new int[2];
+        suitNumber[0] = getSuit();
+        suitNumber[1] = getNumber();
+
+        return suitNumber;
+    }
+
+    public static void main(String[] args){
+        Card testCard = new Card(1, 1);
+        System.out.println(testCard.toArray()[0]);
     }
 }
