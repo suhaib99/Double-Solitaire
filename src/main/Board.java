@@ -23,9 +23,9 @@ public class Board {
 
     Board(){
         this.shuffleAndDeal();
-
     }
 
+    //TODO: finish filling out setters and finish writing getter methods
     void setFoundation1(int[] card){
 
     }
@@ -75,7 +75,7 @@ public class Board {
             deckIndex++;
         }
 
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 3; i++){
             pile3.add(shuffledDeck.get(deckIndex));
             deckIndex++;
         }

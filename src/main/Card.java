@@ -23,6 +23,10 @@ public class Card {
         return suit;
     }
 
+    /**
+     * Represents card object as size 2 array with element 0 being Suit, and element 1 being number
+     * @return suitNumber: An array containing suit & number of card
+     */
     int[] toArray(){
         int[] suitNumber = new int[2];
         suitNumber[0] = getSuit();
