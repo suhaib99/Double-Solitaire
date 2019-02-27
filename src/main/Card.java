@@ -20,7 +20,7 @@ public class Card {
     }
 
     private int getSuit() {
-        return suit;
+        return this.suit;
     }
 
     /**

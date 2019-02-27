@@ -27,25 +27,36 @@ public class Board {
 
     //TODO: finish filling out setters and finish writing getter methods
     void setFoundation1(int[] card){
-
+        this.foundation1.add(card);
     }
 
     void setFoundation2(int[] card){
-
+        this.foundation2.add(card);
     }
 
     void setFoundation3(int[] card){
-
+        this.foundation3.add(card);
     }
 
     void setFoundation4(int[] card){
-
+        this.foundation4.add(card);
     }
 
     ArrayList<int[]> getFoundation1(){
         return this.foundation1;
     }
 
+    ArrayList<int[]> getFoundation2(){
+        return this.foundation2;
+    }
+
+    ArrayList<int[]> getFoundation3(){
+        return this.foundation3;
+    }
+
+    ArrayList<int[]> getFoundation4(){
+        return this.foundation4;
+    }
 
     private void shuffleAndDeal(){
         Deck mainDeck = new Deck();
