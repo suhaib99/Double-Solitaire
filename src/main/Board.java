@@ -22,7 +22,7 @@ public class Board {
     private ArrayList<int[]> discardPile = new ArrayList<>();
 
     Board(){
-        this.shuffleAndDeal();
+       // this.shuffleAndDeal();
     }
 
     //TODO: finish filling out setters and finish writing getter methods
@@ -46,7 +46,7 @@ public class Board {
         return this.foundation1;
     }
 
-
+/*
     private void shuffleAndDeal(){
         Deck mainDeck = new Deck();
 
@@ -94,6 +94,7 @@ public class Board {
         }
     }
 
+*/
     public static void main(String[] args){
         Board testBoard = new Board();
 

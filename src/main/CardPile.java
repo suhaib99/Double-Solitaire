@@ -24,7 +24,7 @@ public class CardPile {
     }
 
     void select(int start, int end){
-        //do nothing
+        //do nothing to be overridden
     }
 
     void addCard(Card card){
@@ -33,6 +33,11 @@ public class CardPile {
 
     int getNoCards(){
         return cardList.size();
+    }
+
+    boolean canAccept(Card aCard){
+        // Overridden
+        return false;
     }
 
 }

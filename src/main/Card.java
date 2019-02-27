@@ -44,13 +44,6 @@ public class Card {
         this.faceUp = ! this.faceUp;
     }
 
-    /**
-     * Represents card object as size 2 array with element 0 being Suit, and element 1 being number
-     * @return suitNumber: An array containing suit & number of card
-     */
-
-
-
     public static void main(String[] args){
 
     }
