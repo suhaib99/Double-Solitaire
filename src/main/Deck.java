@@ -1,3 +1,5 @@
+// Commented out because it is being replaced by DeckPile
+/*
 package main;
 
 import java.util.Arrays;
@@ -26,3 +28,4 @@ public class Deck {
         System.out.println(testDeck.getDeck()[10][1]);
     }
 }
+*/
