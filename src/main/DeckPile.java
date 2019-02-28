@@ -5,22 +5,21 @@ import java.util.Collections;
 
 public class DeckPile extends CardPile {
 
-    private CardPile deckPile = new CardPile();
+    private CardPile startPile = new CardPile();
     private CardPile shuffledPile = new CardPile();
 
     DeckPile() {
-
         for (int i = 1; i <= 13; i++) {
             for (int j = 1; j <= 4; j++) {
-                deckPile.addCard(new Card(i, j));
+                startPile.addCard(new Card(i, j));
             }
         }
-
-        ArrayList<Card> shuffledList = deckPile.getCardList();
+        ArrayList<Card> shuffledList = startPile.getCardList();
         Collections.shuffle(shuffledList);
 
         for (Card card:shuffledList){
             shuffledPile.addCard(card);
+
         }
     }
 
@@ -32,19 +31,26 @@ public class DeckPile extends CardPile {
     }
 
     @Override
-    void select(int start, int end){
+    ArrayList<Card> select(int end){
+        ArrayList<Card> temp_list = new ArrayList<>();
+        for (int i = 0; i < end; i++) {
+            temp_list.add(shuffledPile.pop());
 
+        }
 
+        Collections.reverse(temp_list);
+
+        return temp_list;
     }
 
     @Override
     int getNoCards(){
-        return this.getCardList().size();
+        return shuffledPile.getCardList().size();
     }
 
     public static void main(String[] args){
         DeckPile testDeck = new DeckPile();
-        System.out.println(testDeck.getNoCards());
+        System.out.println(testDeck.getCardList());
 
     }
 }

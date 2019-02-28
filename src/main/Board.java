@@ -6,97 +6,37 @@ import java.util.List;
 import java.util.Arrays;
 
 public class Board {
-    private ArrayList<int[]> foundation1 = new ArrayList<>();
-    private ArrayList<int[]> foundation2 = new ArrayList<>();
-    private ArrayList<int[]> foundation3 = new ArrayList<>();
-    private ArrayList<int[]> foundation4 = new ArrayList<>();
 
-    private ArrayList<int[]> pile1 = new ArrayList<>();
-    private ArrayList<int[]> pile2 = new ArrayList<>();
-    private ArrayList<int[]> pile3 = new ArrayList<>();
-    private ArrayList<int[]> pile4 = new ArrayList<>();
-    private ArrayList<int[]> pile5 = new ArrayList<>();
-    private ArrayList<int[]> pile6 = new ArrayList<>();
-    private ArrayList<int[]> pile7 = new ArrayList<>();
+    private DeckPile deck = new DeckPile();
 
-    private ArrayList<int[]> discardPile = new ArrayList<>();
+    private TablePile pile1 = new TablePile(1, deck);
+    private TablePile pile2 = new TablePile(2, deck);
+    private TablePile pile3 = new TablePile(3, deck);
+    private TablePile pile4 = new TablePile(4, deck);
+    private TablePile pile5 = new TablePile(5, deck);
+    private TablePile pile6 = new TablePile(6, deck);
+    private TablePile pile7 = new TablePile(7, deck);
+
+    private DiscardPile discard = new DiscardPile();
 
     Board(){
-       // this.shuffleAndDeal();
-    }
-
-    //TODO: finish filling out setters and finish writing getter methods
-    void setFoundation1(int[] card){
-
-    }
-
-    void setFoundation2(int[] card){
+        for (Card card: deck.getCardList()){
+            discard.addCard(card);
+        }
 
     }
 
-    void setFoundation3(int[] card){
 
-    }
 
-    void setFoundation4(int[] card){
 
-    }
-
-    ArrayList<int[]> getFoundation1(){
-        return this.foundation1;
-    }
-
-/*
-    private void shuffleAndDeal(){
-        Deck mainDeck = new Deck();
-
-        List<int[]> shuffledDeck = Arrays.asList(mainDeck.getDeck());
-        Collections.shuffle(shuffledDeck);
-
-        int deckIndex = 0;
-
-        for (int i = 0; i < 7; i++){
-            pile7.add(shuffledDeck.get(deckIndex));
-            deckIndex++;
-        }
-
-        for (int i = 0; i < 6; i++){
-            pile6.add(shuffledDeck.get(deckIndex));
-            deckIndex++;
-        }
-
-        for (int i = 0; i < 5; i++){
-            pile5.add(shuffledDeck.get(deckIndex));
-            deckIndex++;
-        }
-
-        for (int i = 0; i < 4; i++){
-            pile4.add(shuffledDeck.get(deckIndex));
-            deckIndex++;
-        }
-
-        for (int i = 0; i < 3; i++){
-            pile3.add(shuffledDeck.get(deckIndex));
-            deckIndex++;
-        }
-
-        for (int i = 0; i < 2; i++){
-            pile2.add(shuffledDeck.get(deckIndex));
-            deckIndex++;
-        }
-
-        pile1.add(shuffledDeck.get(deckIndex));
-        deckIndex++;
-
-        while (deckIndex < 52){
-            discardPile.add(shuffledDeck.get(deckIndex));
-            deckIndex++;
-        }
-    }
-
-*/
     public static void main(String[] args){
         Board testBoard = new Board();
+
+        System.out.println(testBoard.deck.getCardList());
+        System.out.println(testBoard.pile3.getCardList());
+        System.out.println(testBoard.discard.getCardList());
+        System.out.println(testBoard.pile1.getCardList());
+        System.out.println(testBoard.pile2.getCardList());
 
     }
 

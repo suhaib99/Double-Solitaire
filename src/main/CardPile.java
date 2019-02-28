@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 
 public class CardPile {
-    private ArrayList<Card> cardList = new ArrayList<>();
+    protected ArrayList<Card> cardList = new ArrayList<>();
 
     ArrayList<Card> getCardList(){
         return new ArrayList<>(cardList);
@@ -14,17 +14,27 @@ public class CardPile {
     }
 
     Card top(){
-        return cardList.get(cardList.size()-1);
+        if (!empty())
+            return cardList.get(cardList.size()-1);
+
+        else
+            return null;
     }
 
-    Card pop(){
-        Card return_val = this.top();
-        cardList.remove(cardList.size()-1);
-        return return_val;
+    Card pop() {
+        if (!empty()) {
+            Card return_val = this.top();
+            cardList.remove(cardList.size() - 1);
+            return return_val;
+        }
+        else
+            return null;
+
     }
 
-    void select(int start, int end){
+    ArrayList<Card> select(int end){
         //do nothing to be overridden
+        return null;
     }
 
     void addCard(Card card){
@@ -38,6 +48,20 @@ public class CardPile {
     boolean canAccept(Card aCard){
         // Overridden
         return false;
+    }
+
+    public static void main(String[] args){
+        CardPile testpile = new CardPile();
+        testpile.addCard(new Card(1, 4));
+        testpile.addCard(new Card(2, 5));
+
+        System.out.println(testpile.getCardList().toString());
+        System.out.println(testpile.getCardList().get(0).getNumber());
+        System.out.println(testpile.getCardList().get(1).getNumber());
+        System.out.println(testpile.pop());
+        System.out.println(testpile.getCardList().toString());
+
+
     }
 
 }
