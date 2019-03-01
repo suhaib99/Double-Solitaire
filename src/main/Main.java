@@ -41,8 +41,11 @@ public class Main {
                         board.move(board.discard, board.tablePiles[Character.getNumericValue(last) - 1]);
                         board.display();
                     }
+                }else if (secondLast == 'F' && Character.isDigit(charArray[0])) {
+                    board.move(board.tablePiles[Character.getNumericValue(charArray[0]) - 1], board.foundationPiles[Character.getNumericValue(last) - 1]);
+
                 } else if (Character.isDigit(charArray[0])) {
-                    board.move(board.tablePiles[Character.getNumericValue(charArray[0])], board.tablePiles[Character.getNumericValue(last)]);
+                    board.move(board.tablePiles[Character.getNumericValue(charArray[0]) - 1], board.tablePiles[Character.getNumericValue(last) - 1]);
                     board.display();
 
                 }
