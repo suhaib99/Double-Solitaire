@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 
 public class CardPile {
-    protected ArrayList<Card> cardList = new ArrayList<>();
+    private ArrayList<Card> cardList = new ArrayList<>();
 
     ArrayList<Card> getCardList(){
         return new ArrayList<>(cardList);
@@ -35,6 +35,15 @@ public class CardPile {
     ArrayList<Card> select(int end){
         //do nothing to be overridden
         return null;
+    }
+
+    ArrayList<Card> select(){
+        //do nothing to be overriden in TablePile
+        return null;
+    }
+
+    void addToFront(Card aCard){
+        cardList.add(0, aCard);
     }
 
     void addCard(Card card){

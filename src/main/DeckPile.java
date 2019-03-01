@@ -11,7 +11,7 @@ public class DeckPile extends CardPile {
     DeckPile() {
         for (int i = 1; i <= 13; i++) {
             for (int j = 1; j <= 4; j++) {
-                startPile.addCard(new Card(i, j));
+                startPile.addCard(new Card(j, i));
             }
         }
         ArrayList<Card> shuffledList = startPile.getCardList();
@@ -28,6 +28,16 @@ public class DeckPile extends CardPile {
     @Override
     ArrayList<Card> getCardList(){
         return shuffledPile.getCardList();
+    }
+
+    @Override
+    Card top(){
+        return shuffledPile.top();
+    }
+
+    @Override
+    Card pop(){
+        return shuffledPile.pop();
     }
 
     @Override
