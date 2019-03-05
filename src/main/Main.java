@@ -13,6 +13,8 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        board.display();
+
         while(!board.gameOver()) {
             System.out.println("Make your move");
             String inputCommand = scanner.nextLine();
@@ -23,7 +25,7 @@ public class Main {
                 continue;
             }
 
-            if(inputCommand.isBlank())
+            if(inputCommand.isEmpty())
                 continue;
 
             char[] charArray = inputCommand.toCharArray();
