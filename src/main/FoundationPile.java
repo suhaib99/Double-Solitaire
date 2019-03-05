@@ -6,8 +6,8 @@ public class FoundationPile extends CardPile {
     boolean canAccept(Card aCard){
         if (this.empty() && aCard.isAce()){
             return true;
-        }
-        return aCard.getSuit() == this.top().getSuit() && aCard.getNumber() == this.top().getNumber() - 1;
+        } else
+        return (aCard.getSuit() == this.top().getSuit()) && (aCard.getNumber() == this.top().getNumber() - 1);
     }
 
 
