@@ -40,10 +40,8 @@ public class MainVisual extends Application {
         Group root = new Group(imageView);
 
 
-
         //Creating a scene object
         Scene scene = new Scene(root, 1800, 800);
-
 
 
         //Adding scene to the stage
@@ -53,3 +51,5 @@ public class MainVisual extends Application {
         primaryStage.show();
     }
 }
+
+
