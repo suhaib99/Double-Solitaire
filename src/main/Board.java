@@ -61,6 +61,11 @@ public class Board {
     }
 
     void display(){
+
+
+
+
+        /*
         String[] foundationLetters = new String[4];
         for (int i = 0; i < foundationPiles.length; i++) {
             if (!foundationPiles[i].empty())
@@ -85,6 +90,7 @@ public class Board {
                 tablePiles[1].top().getSuitName()+ " " + tablePiles[2].top().getSuitName() + " " +
                 tablePiles[3].top().getSuitName() + " " + tablePiles[4].top().getSuitName() + " " +
                 tablePiles[5].top().getSuitName() + " " + tablePiles[6].top().getSuitName() + "\n");
+       */
     }
 
     public static void main(String[] args){

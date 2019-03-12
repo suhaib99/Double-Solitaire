@@ -32,6 +32,10 @@ public class CardPile {
 
     }
 
+    int getIndex(Card card){
+        return this.cardList.indexOf(card);
+    }
+
     ArrayList<Card> select(int end){
         //do nothing to be overridden
         return null;

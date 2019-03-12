@@ -11,11 +11,17 @@ public class Main {
 
         Board board = new Board();
 
+        MainVisual visual = new MainVisual();
+
         Scanner scanner = new Scanner(System.in);
 
         board.display();
 
         while(!board.gameOver()) {
+
+
+
+            /*
             System.out.println("Make your move");
             String inputCommand = scanner.nextLine();
 
@@ -60,7 +66,7 @@ public class Main {
                 System.out.println("Entry out of range, please enter a pile betwteen 1 and 7");
 
             }
-
+            */
         }
     }
 }
