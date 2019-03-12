@@ -1,17 +1,27 @@
 package main;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
+
 /**
  * Class containing Suit and Value of a playing card
  */
 public class Card {
 
-    private static final String[] NAMES = {"A", "2","3","4","5","6","7","8","9","10","J","Q","K"};
-    private static final String[] SUITS = {"Spades", "Clubs", "Hearts", "Diamonds"};
+    private static final String[] NAMES = {"Ace", "2","3","4","5","6","7","8","9","10","Jack","Queen","King"};
+    private static final String[] SUITS = {"spade", "club", "heart", "diamond"};
     // 1: Spade, 2: Club, 3: Hearts, 4: Diamond
     private int suit;
 
     // Ace: 1, Jack: 11, Queen: 12, King: 13
     private int rank;
+
+    private static final int WIDTH = 75;
+    private static final int HEIGHT = 113;
 
     private boolean faceUp;
 
@@ -54,6 +64,12 @@ public class Card {
     boolean isKing(){
         return (getNumber() == 13);
     }
+    boolean isQueen(){
+        return (getNumber() == 12);
+    }
+    boolean isJack(){
+        return (getNumber() == 11);
+    }
 
     boolean isAce(){
         return (getNumber() == 1);
@@ -67,7 +83,32 @@ public class Card {
         return SUITS[this.getSuit() - 1];
     }
 
+    public ImageView displayCard(int x, int y){
+        Image cardImage;
+
+        try {
+            cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s", this.getSuitName() + this.getName() + ".png")));
+            ImageView imageview = new ImageView(cardImage);
+
+            imageview.setX(x);
+            imageview.setY(y);
+
+            imageview.setFitHeight(HEIGHT);
+            imageview.setFitWidth(WIDTH);
+
+            imageview.setPreserveRatio(true);
+
+            return imageview;
+
+        }
+        catch(java.io.FileNotFoundException e) {
+            System.out.println("FileNotFound");
+            return null;
+        }
+    }
+
     public static void main(String[] args){
+
 
     }
 }
