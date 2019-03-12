@@ -20,7 +20,7 @@ public class MainVisual extends Application {
         primaryStage.setTitle("Double Solitaire");
 
 
-        Image image = new Image(new FileInputStream("Double-Solitaire/Resources/Decks/pngs/diamondAce.png"));
+        Image image = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/diamondAce.png"));
 
         //Setting the image view
         ImageView imageView = new ImageView(image);
