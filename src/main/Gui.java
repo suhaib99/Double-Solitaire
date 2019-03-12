@@ -1,3 +1,5 @@
+package main;
+
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,8 +16,8 @@ public class Gui extends JFrame {
         pic2.setBounds(250, 30, 150, 150);
 
 
-        pic1.setIcon(new ImageIcon("C:\\Users\\rajai\\Documents\\GitHub\\Double-Solitaire\\Resources\\Decks\\pngs\\diamondAce.png")); //ImageIcon creates a uninitialized image icon
-        pic2.setIcon(new ImageIcon("C:\\Users\\rajai\\Documents\\GitHub\\Double-Solitaire\\Resources\\Decks\\pngs\\clubAce.png"));
+        pic1.setIcon(new ImageIcon("Double-Solitaire/src/res/Decks/pngs/diamondAce.png")); //ImageIcon creates a uninitialized image icon
+        pic2.setIcon(new ImageIcon("Double-Solitaire/src/res/Decks/pngs/clubAce.png"));
 
         MouseListener listener = new MouseListener() {      //The listener interface for receiving mouse events (press, release, click, enter, and exit) on a component.
 
