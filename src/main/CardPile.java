@@ -1,5 +1,6 @@
 package main;
 
+import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 public class CardPile {
@@ -61,6 +62,15 @@ public class CardPile {
     boolean canAccept(Card aCard){
         // Overridden
         return false;
+    }
+
+    // team number is passed as argument
+    ArrayList<Image> display(int team){
+        ArrayList<Image> images = new ArrayList<>();
+        for (Card card: this.getCardList()){
+            images.add(card.displayCard(team));
+        }
+        return images;
     }
 
     public static void main(String[] args){
