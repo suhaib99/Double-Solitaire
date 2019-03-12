@@ -83,22 +83,12 @@ public class Card {
         return SUITS[this.getSuit() - 1];
     }
 
-    public ImageView displayCard(int x, int y){
+    public Image displayCard(int x, int y){
         Image cardImage;
 
         try {
             cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s", this.getSuitName() + this.getName() + ".png")));
-            ImageView imageview = new ImageView(cardImage);
-
-            imageview.setX(x);
-            imageview.setY(y);
-
-            imageview.setFitHeight(HEIGHT);
-            imageview.setFitWidth(WIDTH);
-
-            imageview.setPreserveRatio(true);
-
-            return imageview;
+            return cardImage;
 
         }
         catch(java.io.FileNotFoundException e) {
