@@ -43,4 +43,6 @@ public class TablePile extends CardPile {
 
         return (this.top().getColor() != aCard.getColor()) && (this.top().getNumber() == aCard.getNumber() + 1);
     }
+
+
 }

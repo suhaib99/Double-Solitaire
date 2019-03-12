@@ -20,8 +20,8 @@ public class Card {
     // Ace: 1, Jack: 11, Queen: 12, King: 13
     private int rank;
 
-    private static final int WIDTH = 75;
-    private static final int HEIGHT = 113;
+    public static final int WIDTH = 75;
+    public static final int HEIGHT = 113;
 
     private boolean faceUp;
 
@@ -83,18 +83,27 @@ public class Card {
         return SUITS[this.getSuit() - 1];
     }
 
-    public Image displayCard(int x, int y){
+    // team 1: blue, team 2: red
+    public Image displayCard(int team){
         Image cardImage;
 
         try {
-            cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s", this.getSuitName() + this.getName() + ".png")));
-            return cardImage;
+            if (this.faceUp) {
+                cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s", this.getSuitName() + this.getName() + ".png")));
+                return cardImage;
+            } else if (team == 1){
+                cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/blueBack"));
+                return cardImage;
+            } else if (team == 2){
+                cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/redBack"));
+                return cardImage;
+            }
 
         }
         catch(java.io.FileNotFoundException e) {
             System.out.println("FileNotFound");
-            return null;
         }
+        return null;
     }
 
     public static void main(String[] args){
