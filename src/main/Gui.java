@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 
 
 public class Gui extends JFrame {
-    JLabel pic1,pic2,pic3;
+    JLabel pic1,pic2;
     public Gui(){
         super("Drag and Drop the Cards");
         pic1 = new JLabel();    //A JLabel object can display either text, an image, or both.
@@ -16,8 +16,8 @@ public class Gui extends JFrame {
         pic2.setBounds(250, 30, 150, 150);
 
 
-        pic1.setIcon(new ImageIcon("Double-Solitaire/src/res/Decks/pngs/diamondAce.png")); //ImageIcon creates a uninitialized image icon
-        pic2.setIcon(new ImageIcon("Double-Solitaire/src/res/Decks/pngs/clubAce.png"));
+        pic1.setIcon(new ImageIcon("src/res/Decks/pngs/diamondAce.png")); //ImageIcon creates a uninitialized image icon
+        pic2.setIcon(new ImageIcon("src/res/Decks/pngs/clubAce.png"));
 
         MouseListener listener = new MouseListener() {      //The listener interface for receiving mouse events (press, release, click, enter, and exit) on a component.
 

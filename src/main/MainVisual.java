@@ -19,13 +19,32 @@ public class MainVisual extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Double Solitaire");
 
-        Card testCard = new Card(1, 1);
+
+        Image image = new Image(new FileInputStream("src\\res\\Decks\\pngs\\diamondAce.png"));
+
+        //Setting the image view
+        ImageView imageView = new ImageView(image);
+
+
+        //Setting the position of the image
+        imageView.setX(50);
+        imageView.setY(25);
+
+
+        //setting the fit height and width of the image view
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(100);
+
+        //Setting the preserve ratio of the image view
+        imageView.setPreserveRatio(true);
 
         //Creating a Group object
-        Group root = new Group(testCard.displayCard(50, 50));
+        Group root = new Group(imageView);
+
 
         //Creating a scene object
         Scene scene = new Scene(root, 1800, 800);
+
 
         //Adding scene to the stage
         primaryStage.setScene(scene);
