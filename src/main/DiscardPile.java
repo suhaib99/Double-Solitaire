@@ -1,5 +1,7 @@
 package main;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 public class DiscardPile extends CardPile {
@@ -22,4 +24,10 @@ public class DiscardPile extends CardPile {
 
     }
 
+    @Override
+    ArrayList<Image> display(int team){
+        ArrayList<Image> images = new ArrayList<>();
+        images.add(this.top().displayCard(team));
+        return images;
+    }
 }
