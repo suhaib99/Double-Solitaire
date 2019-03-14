@@ -34,6 +34,25 @@ public class TablePile extends CardPile {
     }
 
     @Override
+    boolean contains(double mouseX, double mouseY){
+        if (this.getNoCards() == 1 && !this.empty()){
+            super.contains(mouseX, mouseY);
+        } else if (!this.empty()){
+            int counter = 0;
+            for (int i = this.getNoCards() - 1; i <= 0; i--) {
+                if (!this.getCardList().get(i).getFaceUp()){
+                    break;
+                }
+                counter++;
+            }
+            int index = this.getNoCards() - counter;
+            return (mouseX > this.getX() && mouseX < this.getX() + Card.WIDTH && mouseY > this.getY() +
+            MainVisual.STACKVOFFSET*index && mouseY < this.getY() + MainVisual.STACKVOFFSET*index + Card.HEIGHT);
+        }
+        return false;
+    }
+
+    @Override
     boolean canAccept(Card aCard) {
         if (this.empty())
             return aCard.isKing();

@@ -89,7 +89,8 @@ public class Card {
 
         try {
             if (this.faceUp) {
-                cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s", this.getSuitName() + this.getName() + ".png")));
+                cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s",
+                        this.getSuitName() + this.getName() + ".png")));
                 return cardImage;
             } else if (team == 1){
                 cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/blueBack.png"));
