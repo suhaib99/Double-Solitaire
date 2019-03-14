@@ -22,16 +22,18 @@ public class MainVisual extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    final static int STACKVOFFSET = 17;
+    final static int VOFFSET = 30;
+    final static int HOFFSET = 30;
+    final static int canvasWidth = 900;
+    final static int canvasHeight = 500;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception
     {
         // Vertical offset between stacked cards
-        final int STACKVOFFSET = 17;
-        final int VOFFSET = 30;
-        final int HOFFSET = 30;
-        final int canvasWidth = 900;
-        final int canvasHeight = 500;
+
 
         Board blueBoard = new Board(1);
         Board redBoard = new Board(2);
@@ -48,7 +50,23 @@ public class MainVisual extends Application {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (blueBoard.getDiscard().contains(event.getX(), event.getY())){
+                    if (blueBoard.getDiscard().top().getFaceUp()){
+                        Image discardImage = blueBoard.getDiscard().display(blueBoard.getTeam())
+                                .get(0);
+
+                        gc.drawImage(discardImage, event.getX(), event.getY());
+                    } else if (!blueBoard.getDiscard().top().getFaceUp()){
+                        blueBoard.getDiscard().flipThrough();
+                    }
+                }
+            }
+        });
+
+        scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
@@ -72,12 +90,14 @@ public class MainVisual extends Application {
                 for (int i = 1; i < 5; i++){
                     if (images[i] != null){
                         for (Image foundationImage : images[i]){
-                            gc.drawImage(foundationImage, blueBoard.getFoundationPiles()[i-1].getX(), blueBoard.getFoundationPiles()[i-1].getY());
+                            gc.drawImage(foundationImage, blueBoard.getFoundationPiles()[i-1].getX(),
+                                    blueBoard.getFoundationPiles()[i-1].getY());
 
                         }
                     } else if (images[i] == null) {
                         gc.setFill(new Color(0, 0.5, 0, 1));
-                        gc.fillRect(blueBoard.getFoundationPiles()[i-1].getX(), blueBoard.getFoundationPiles()[i-1].getY(), Card.WIDTH, Card.HEIGHT);
+                        gc.fillRect(blueBoard.getFoundationPiles()[i-1].getX(),
+                                blueBoard.getFoundationPiles()[i-1].getY(), Card.WIDTH, Card.HEIGHT);
 
                     }
                 }
@@ -85,7 +105,8 @@ public class MainVisual extends Application {
                 for (int i = 5; i < 12; i++){
                     int counter = 0;
                     for (Image tablePile: images[i]){
-                        gc.drawImage(tablePile, blueBoard.getTablePiles()[i-5].getX(), blueBoard.getTablePiles()[i-5].getY()+ (counter)*STACKVOFFSET);
+                        gc.drawImage(tablePile, blueBoard.getTablePiles()[i-5].getX(),
+                                blueBoard.getTablePiles()[i-5].getY()+ (counter)*STACKVOFFSET);
                         counter++;
                     }
                 }

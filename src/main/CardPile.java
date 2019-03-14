@@ -74,6 +74,10 @@ public class CardPile {
         this.y = y;
     }
 
+    boolean contains(double mouseX, double mouseY){
+        return (mouseX > this.x && mouseX < this.x + Card.WIDTH && mouseY > this.y && mouseY < this.y + Card.HEIGHT);
+    }
+
     int getNoCards(){
         return cardList.size();
     }

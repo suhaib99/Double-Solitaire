@@ -92,6 +92,10 @@ public class Board {
         return tablePiles;
     }
 
+    public int getTeam() {
+        return team;
+    }
+
     /**
      * discard at [0]
      * foundation at [1-4]
