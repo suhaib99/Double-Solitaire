@@ -20,49 +20,76 @@ public class Board {
 
     protected DiscardPile discard = new DiscardPile();
 
-    Board(int team){
+    Board(int team) {
+
+        int VOFFSET = 30;
+        int HOFFSET = 30;
+        int cardWidth = Card.WIDTH;
+        int cardHeight = Card.HEIGHT;
+
         tablePiles = new TablePile[7];
 
         this.team = team;
 
-        for (int i = 0; i < 7; i++){
-            int j = i+1;
+        for (int i = 0; i < 7; i++) {
+            int j = i + 1;
 
             tablePiles[i] = new TablePile(j, deck);
+
+            tablePiles[i].setX(HOFFSET + i * (HOFFSET + cardWidth));
+            tablePiles[i].setY(2 * VOFFSET + cardHeight);
 
         }
 
         foundationPiles = new FoundationPile[4];
 
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             foundationPiles[i] = new FoundationPile();
+
+            foundationPiles[i].setX(4 * HOFFSET + 3 * cardWidth + i * (cardWidth+HOFFSET));
+            foundationPiles[i].setY(VOFFSET);
         }
 
-        for (Card card: deck.getCardList()){
+        for (Card card : deck.getCardList()) {
             discard.addCard(card);
+
+            discard.setX(HOFFSET);
+            discard.setY(VOFFSET);
         }
     }
 
-    void move(CardPile pileFrom, CardPile pileTo){
-        if (pileTo.canAccept(pileFrom.top())){
+    void move(CardPile pileFrom, CardPile pileTo) {
+        if (pileTo.canAccept(pileFrom.top())) {
             pileTo.addCard(pileFrom.pop());
         }
     }
 
-    void flipThroughDiscard(){
+    void flipThroughDiscard() {
         discard.flipThrough();
     }
 
-    boolean gameOver(){
+    boolean gameOver() {
         if (!discard.empty())
             return false;
 
-        for (int i = 1; i<=7; i++){
-            if (!tablePiles[i-1].empty()){
+        for (int i = 1; i <= 7; i++) {
+            if (!tablePiles[i - 1].empty()) {
                 return false;
             }
         }
         return true;
+    }
+
+    public DiscardPile getDiscard() {
+        return discard;
+    }
+
+    public FoundationPile[] getFoundationPiles() {
+        return foundationPiles;
+    }
+
+    public TablePile[] getTablePiles() {
+        return tablePiles;
     }
 
     /**
@@ -77,7 +104,11 @@ public class Board {
         images[0] = discard.display(this.team);
 
         for (int i = 1; i < 5; i++){
-            images[i] = foundationPiles[i-1].display(this.team);
+            if (!foundationPiles[i-1].empty())
+                images[i] = foundationPiles[i-1].display(this.team);
+            else{
+                images[i] = null;
+            }
         }
 
         for (int i = 5; i < 12; i++){

@@ -92,10 +92,10 @@ public class Card {
                 cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s", this.getSuitName() + this.getName() + ".png")));
                 return cardImage;
             } else if (team == 1){
-                cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/blueBack"));
+                cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/blueBack.png"));
                 return cardImage;
             } else if (team == 2){
-                cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/redBack"));
+                cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/redBack.png"));
                 return cardImage;
             }
 

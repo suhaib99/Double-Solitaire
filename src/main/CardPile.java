@@ -14,9 +14,12 @@ public class CardPile {
         return cardList.isEmpty();
     }
 
+    private int x;
+    private int y;
+
     Card top(){
         if (!empty())
-            return cardList.get(cardList.size()-1);
+            return cardList.get(cardList.size() - 1);
 
         else
             return null;
@@ -53,6 +56,22 @@ public class CardPile {
 
     void addCard(Card card){
         cardList.add(card);
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     int getNoCards(){
