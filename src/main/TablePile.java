@@ -17,7 +17,7 @@ public class TablePile extends CardPile {
     void addCard(ArrayList<Card> aCardList){
         for (Card card: aCardList){
             card.setX(this.getX());
-            card.setY(this.getY() + (this.getNoCards()) * MainVisual.STACKVOFFSET);
+            card.setY(this.getY() + (this.getNoCards()-1) * MainVisual.STACKVOFFSET);
             card.setHeld(false);
         }
 

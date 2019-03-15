@@ -64,10 +64,8 @@ public class MainVisual extends Application {
                 for (int i = 1; i < 5; i++){
                     if (images[i] != null){
                         for (Image foundationImage : images[i]){
-                            gc.drawImage(foundationImage, blueBoard.getFoundationPiles()[i-1].getCardList().
-                                    get(blueBoard.getFoundationPiles()[i-1].getNoCards()-1).getX(), blueBoard
-                                    .getFoundationPiles()[i-1].getCardList().get(blueBoard.getFoundationPiles()
-                                    [i-1].getNoCards()-1).getY());
+                            gc.drawImage(foundationImage, blueBoard.getFoundationPiles()[i-1].getX(), blueBoard
+                                    .getFoundationPiles()[i-1].getY());
 
                         }
                     } else if (images[i] == null) {
@@ -101,7 +99,6 @@ public class MainVisual extends Application {
                                 getDiscard().top().getFaceUp()) {
                             blueBoard.getDiscard().top().setHeld(true);
                             fromPile = blueBoard.discard;
-                            holding = true;
                         }
 
                         if (!holding){
@@ -133,6 +130,7 @@ public class MainVisual extends Application {
                                 discardTop.setX(event.getSceneX() - Card.WIDTH / 2.0);
                                 discardTop.setY(event.getSceneY() - Card.HEIGHT / 2.0);
 
+                                holding = true;
                                 selectedCards = blueBoard.discard.select();
                             }
                         }
