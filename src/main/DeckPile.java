@@ -17,10 +17,7 @@ public class DeckPile extends CardPile {
         ArrayList<Card> shuffledList = startPile.getCardList();
         Collections.shuffle(shuffledList);
 
-        for (Card card:shuffledList){
-            shuffledPile.addCard(card);
-
-        }
+        shuffledPile.addCard(shuffledList);
     }
 
 

@@ -27,7 +27,16 @@ public class DiscardPile extends CardPile {
     @Override
     ArrayList<Image> display(int team){
         ArrayList<Image> images = new ArrayList<>();
-        images.add(this.top().displayCard(team));
+        for (Card card:this.getCardList()){
+            images.add(card.displayCard(team));
+        }
         return images;
+    }
+
+    @Override
+    ArrayList<Card> select(){
+        ArrayList<Card> select = new ArrayList<>();
+        select.add(this.top());
+        return select;
     }
 }
