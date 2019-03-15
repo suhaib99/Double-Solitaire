@@ -54,8 +54,18 @@ public class CardPile {
         cardList.add(0, aCard);
     }
 
+    void addCard(ArrayList<Card> card){
+        cardList.addAll(card);
+        for (Card card1: card) {
+            card1.setX(this.getX());
+            card1.setY(this.getY());
+        }
+    }
+
     void addCard(Card card){
         cardList.add(card);
+        card.setY(this.getX());
+        card.setX(this.getY());
     }
 
     public int getY() {
@@ -82,7 +92,7 @@ public class CardPile {
         return cardList.size();
     }
 
-    boolean canAccept(Card aCard){
+    boolean canAccept(ArrayList<Card> aCard){
         // Overridden
         return false;
     }
@@ -98,8 +108,6 @@ public class CardPile {
 
     public static void main(String[] args){
         CardPile testpile = new CardPile();
-        testpile.addCard(new Card(1, 4));
-        testpile.addCard(new Card(2, 5));
 
         System.out.println(testpile.getCardList().toString());
         System.out.println(testpile.getCardList().get(0).getNumber());

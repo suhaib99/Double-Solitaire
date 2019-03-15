@@ -22,8 +22,6 @@ public class Board {
 
     Board(int team) {
 
-        int VOFFSET = 30;
-        int HOFFSET = 30;
         int cardWidth = Card.WIDTH;
         int cardHeight = Card.HEIGHT;
 
@@ -36,8 +34,16 @@ public class Board {
 
             tablePiles[i] = new TablePile(j, deck);
 
-            tablePiles[i].setX(HOFFSET + i * (HOFFSET + cardWidth));
-            tablePiles[i].setY(2 * VOFFSET + cardHeight);
+            tablePiles[i].setX(MainVisual.HOFFSET + i * (MainVisual.HOFFSET + cardWidth));
+            tablePiles[i].setY(2 * MainVisual.VOFFSET + cardHeight);
+
+            for (int n = 0; n < tablePiles[i].getNoCards(); n++) {
+                Card card = tablePiles[i].getCardList().get(n);
+
+                card.setX(MainVisual.HOFFSET + i * (MainVisual.HOFFSET + cardWidth));
+                card.setY(2 * MainVisual.VOFFSET + cardHeight + n * MainVisual.STACKVOFFSET);
+
+            }
 
         }
 
@@ -46,21 +52,33 @@ public class Board {
         for (int i = 0; i < 4; i++) {
             foundationPiles[i] = new FoundationPile();
 
-            foundationPiles[i].setX(4 * HOFFSET + 3 * cardWidth + i * (cardWidth+HOFFSET));
-            foundationPiles[i].setY(VOFFSET);
+            foundationPiles[i].setX(4 * MainVisual.HOFFSET + 3 * cardWidth + i * (cardWidth+MainVisual.HOFFSET));
+            foundationPiles[i].setY(MainVisual.VOFFSET);
         }
 
-        for (Card card : deck.getCardList()) {
-            discard.addCard(card);
 
-            discard.setX(HOFFSET);
-            discard.setY(VOFFSET);
+        discard.addCard(deck.getCardList());
+
+        discard.setX(MainVisual.HOFFSET);
+        discard.setY(MainVisual.VOFFSET);
+
+        for (int i = 0; i < discard.getNoCards(); i++){
+            Card card1 = discard.getCardList().get(i);
+            card1.setX(MainVisual.HOFFSET);
+            card1.setY(MainVisual.VOFFSET);
         }
+
     }
 
-    void move(CardPile pileFrom, CardPile pileTo) {
-        if (pileTo.canAccept(pileFrom.top())) {
-            pileTo.addCard(pileFrom.pop());
+    void move(CardPile fromPile, ArrayList<Card> cards, CardPile pileTo) {
+        if (cards != null){
+            if (pileTo.canAccept(cards)) {
+                for (Card card: cards) {
+                    pileTo.addCard(card);
+                }
+            } else if (!pileTo.canAccept(cards)){
+                fromPile.addCard(cards);
+            }
         }
     }
 

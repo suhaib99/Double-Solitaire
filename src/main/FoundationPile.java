@@ -1,13 +1,15 @@
 package main;
 
+import java.util.ArrayList;
+
 public class FoundationPile extends CardPile {
 
     @Override
-    boolean canAccept(Card aCard){
-        if (this.empty() && aCard.isAce()){
+    boolean canAccept(ArrayList<Card> aCard){
+        if (this.empty() && aCard.get(0).isAce()){
             return true;
         } else
-        return (aCard.getSuit() == this.top().getSuit()) && (aCard.getNumber() == this.top().getNumber() - 1);
+        return (aCard.get(0).getSuit() == this.top().getSuit()) && (aCard.get(0).getNumber() == this.top().getNumber() - 1);
     }
 
 

@@ -5,12 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 
 /**
  * Class containing Suit and Value of a playing card
  */
-public class Card {
+public class Card{
 
     private static final String[] NAMES = {"Ace", "2","3","4","5","6","7","8","9","10","Jack","Queen","King"};
     private static final String[] SUITS = {"spade", "club", "heart", "diamond"};
@@ -25,8 +26,13 @@ public class Card {
 
     private boolean faceUp;
 
+    private boolean isHeld = false;
+
     // 0: Red, 1: Black
     private int color;
+
+    private double x;
+    private double y;
 
     Card(int suit, int rank){
         this.suit = suit;
@@ -57,6 +63,10 @@ public class Card {
         return color;
     }
 
+    public boolean getHeld(){
+        return isHeld;
+    }
+
     void flip(){
         this.faceUp = !this.faceUp;
     }
@@ -81,6 +91,26 @@ public class Card {
 
     String getSuitName(){
         return SUITS[this.getSuit() - 1];
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setHeld(boolean held) {
+        isHeld = held;
     }
 
     // team 1: blue, team 2: red
