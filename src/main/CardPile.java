@@ -66,6 +66,7 @@ public class CardPile {
         cardList.add(card);
         card.setY(this.getX());
         card.setX(this.getY());
+        card.setHeld(false);
     }
 
     public int getY() {

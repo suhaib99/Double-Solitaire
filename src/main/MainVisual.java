@@ -61,21 +61,13 @@ public class MainVisual extends Application {
 
                 ArrayList<Image>[] images = blueBoard.display();
 
-                int county = 0;
-                for (Image discardImages: images[0]){
-                    gc.drawImage(discardImages, blueBoard.getDiscard().getCardList()
-                            .get(county).getX(), blueBoard.getDiscard().getCardList()
-                            .get(county).getY());
-                    county++;
-                }
-
                 for (int i = 1; i < 5; i++){
                     if (images[i] != null){
                         for (Image foundationImage : images[i]){
                             gc.drawImage(foundationImage, blueBoard.getFoundationPiles()[i-1].getCardList().
-                                            get(blueBoard.getFoundationPiles()[i-1].getNoCards()-1).getX(), blueBoard
-                                            .getFoundationPiles()[i-1].getCardList().get(blueBoard.getFoundationPiles()
-                                            [i-1].getNoCards()-1).getY());
+                                    get(blueBoard.getFoundationPiles()[i-1].getNoCards()-1).getX(), blueBoard
+                                    .getFoundationPiles()[i-1].getCardList().get(blueBoard.getFoundationPiles()
+                                    [i-1].getNoCards()-1).getY());
 
                         }
                     } else if (images[i] == null) {
@@ -83,6 +75,14 @@ public class MainVisual extends Application {
                         gc.fillRect(blueBoard.getFoundationPiles()[i-1].getX(), blueBoard.getFoundationPiles()[i-1]
                                 .getY(), Card.WIDTH, Card.HEIGHT);
                     }
+                }
+
+                int county = 0;
+                for (Image discardImages: images[0]){
+                    gc.drawImage(discardImages, blueBoard.getDiscard().getCardList()
+                            .get(county).getX(), blueBoard.getDiscard().getCardList()
+                            .get(county).getY());
+                    county++;
                 }
 
                 for (int i = 5; i < 12; i++){
@@ -111,6 +111,7 @@ public class MainVisual extends Application {
                                         if (card.getFaceUp())
                                             card.setHeld(true);
                                     }
+
                                     fromPile = blueBoard.getTablePiles()[i];
                                     holding = true;
                                 }
@@ -158,13 +159,12 @@ public class MainVisual extends Application {
                     @Override
                     public void handle(MouseEvent event) {
 
-                        System.out.println("Find ME");
-
                         if (holding) {
                             for (int i = 0; i < blueBoard.getTablePiles().length; i++) {
                                 if (blueBoard.getTablePiles()[i].hoveringOverPile(event.getSceneX(), event.getSceneY())) {
                                     blueBoard.move(fromPile, selectedCards, blueBoard.getTablePiles()[i]);
                                     removeFromPrev();
+                                    blueBoard.getTablePiles()[i].topDown();
 
                                     holding = false;
                                     break;
@@ -175,6 +175,7 @@ public class MainVisual extends Application {
                                 if (blueBoard.getFoundationPiles()[i].contains(event.getSceneX(), event.getSceneY())) {
                                     blueBoard.move(fromPile, selectedCards, blueBoard.getFoundationPiles()[i]);
                                     removeFromPrev();
+                                    blueBoard.getTablePiles()[i].topDown();
                                         
                                     holding = false;
                                     break;
@@ -186,6 +187,7 @@ public class MainVisual extends Application {
                                     card.setX(fromPile.getX());
                                     card.setY(fromPile.getY());
                                     card.setHeld(false);
+                                    holding = false;
                                 }
                             }
                         }
@@ -195,14 +197,11 @@ public class MainVisual extends Application {
                 canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        if (blueBoard.getDiscard().contains(event.getSceneX(), event.getSceneY())){
+                        if (blueBoard.getDiscard().contains(event.getSceneX(), event.getSceneY()) && !holding){
                             blueBoard.discard.flipThrough();
                         }
                     }
                 });
-
-                holding = false;
-
 
                 if (blueBoard.gameOver()){
                     clearBoard();
@@ -232,9 +231,11 @@ public class MainVisual extends Application {
     private void removeFromPrev() {
         if (!selectedCards.isEmpty()){
             int index = fromPile.getIndex(selectedCards.get(selectedCards.size()-1));
-            for (int j = index; j < fromPile.getNoCards(); j++){
-                fromPile.getCardList().get(j).setHeld(false);
-                fromPile.pop();
+            if (index != -1) {
+                for (int j = index; j < fromPile.getNoCards(); j++) {
+                    fromPile.getCardList().get(j).setHeld(false);
+                    fromPile.pop();
+                }
             }
         }
     }

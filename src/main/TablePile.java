@@ -17,7 +17,8 @@ public class TablePile extends CardPile {
     void addCard(ArrayList<Card> aCardList){
         for (Card card: aCardList){
             card.setX(this.getX());
-            card.setY(this.getY() + (this.getNoCards() - 1) * MainVisual.STACKVOFFSET);
+            card.setY(this.getY() + (this.getNoCards()) * MainVisual.STACKVOFFSET);
+            card.setHeld(false);
         }
 
         this.getCardList().addAll(aCardList);
@@ -50,8 +51,11 @@ public class TablePile extends CardPile {
         } else if (!this.empty()){
 
             int counter1 = this.select().size();
-
-            int counter = this.getNoCards() - counter1;
+            int counter;
+            if (counter1 != 0)
+                counter = this.getNoCards() - counter1;
+            else
+                counter = 0;
 
             return (mouseX > this.getCardList().get(counter).getX() && mouseX < this.getCardList().get(counter).getX()
                     + Card.WIDTH && mouseY > this.getCardList().get(counter).getY() && mouseY < this.getCardList()
@@ -78,6 +82,12 @@ public class TablePile extends CardPile {
 
         return (this.top().getColor() != aCardList.get(0).getColor()) && (this.top().getNumber() == aCardList.get(0)
                 .getNumber() + 1);
+    }
+
+    void topDown(){
+        if (!this.top().getFaceUp()){
+            this.top().flip();
+        }
     }
 
 
