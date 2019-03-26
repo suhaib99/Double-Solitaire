@@ -1,12 +1,8 @@
 package main;
 
-import javax.swing.text.html.ImageView;
 import javafx.scene.image.Image;
-import java.lang.reflect.Method;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Arrays;
 
 public class Board {
 
@@ -34,14 +30,14 @@ public class Board {
 
             tablePiles[i] = new TablePile(j, deck);
 
-            tablePiles[i].setX(MainVisual.HOFFSET + i * (MainVisual.HOFFSET + cardWidth));
-            tablePiles[i].setY(2 * MainVisual.VOFFSET + cardHeight);
+            tablePiles[i].setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
+            tablePiles[i].setY(2 * GameSinglePlayer.VOFFSET + cardHeight);
 
             for (int n = 0; n < tablePiles[i].getNoCards(); n++) {
                 Card card = tablePiles[i].getCardList().get(n);
 
-                card.setX(MainVisual.HOFFSET + i * (MainVisual.HOFFSET + cardWidth));
-                card.setY(2 * MainVisual.VOFFSET + cardHeight + n * MainVisual.STACKVOFFSET);
+                card.setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
+                card.setY(2 * GameSinglePlayer.VOFFSET + cardHeight + n * GameSinglePlayer.STACKVOFFSET);
 
             }
 
@@ -52,20 +48,20 @@ public class Board {
         for (int i = 0; i < 4; i++) {
             foundationPiles[i] = new FoundationPile();
 
-            foundationPiles[i].setX(4 * MainVisual.HOFFSET + 3 * cardWidth + i * (cardWidth+MainVisual.HOFFSET));
-            foundationPiles[i].setY(MainVisual.VOFFSET);
+            foundationPiles[i].setX(4 * GameSinglePlayer.HOFFSET + 3 * cardWidth + i * (cardWidth+ GameSinglePlayer.HOFFSET));
+            foundationPiles[i].setY(GameSinglePlayer.VOFFSET);
         }
 
 
         discard.addCard(deck.getCardList());
 
-        discard.setX(MainVisual.HOFFSET);
-        discard.setY(MainVisual.VOFFSET);
+        discard.setX(GameSinglePlayer.HOFFSET);
+        discard.setY(GameSinglePlayer.VOFFSET);
 
         for (int i = 0; i < discard.getNoCards(); i++){
             Card card1 = discard.getCardList().get(i);
-            card1.setX(MainVisual.HOFFSET);
-            card1.setY(MainVisual.VOFFSET);
+            card1.setX(GameSinglePlayer.HOFFSET);
+            card1.setY(GameSinglePlayer.VOFFSET);
         }
 
     }
