@@ -11,7 +11,7 @@ public class Main {
 
         Board board = new Board(1);
 
-        MainVisual visual = new MainVisual();
+        GameSinglePlayer visual = new GameSinglePlayer();
 
         Scanner scanner = new Scanner(System.in);
 

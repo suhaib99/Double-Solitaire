@@ -17,7 +17,7 @@ import javafx.scene.canvas.Canvas;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
-public class MainVisual extends Application {
+public class GameSinglePlayer extends Application {
 
     public static void main(String[] args) {
         launch(args);

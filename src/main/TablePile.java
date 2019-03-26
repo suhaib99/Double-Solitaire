@@ -17,7 +17,7 @@ public class TablePile extends CardPile {
     void addCard(ArrayList<Card> aCardList){
         for (Card card: aCardList){
             card.setX(this.getX());
-            card.setY(this.getY() + (this.getNoCards()-1) * MainVisual.STACKVOFFSET);
+            card.setY(this.getY() + (this.getNoCards()-1) * GameSinglePlayer.STACKVOFFSET);
             card.setHeld(false);
         }
 
@@ -59,7 +59,7 @@ public class TablePile extends CardPile {
 
             return (mouseX > this.getCardList().get(counter).getX() && mouseX < this.getCardList().get(counter).getX()
                     + Card.WIDTH && mouseY > this.getCardList().get(counter).getY() && mouseY < this.getCardList()
-                    .get(counter).getY() + MainVisual.STACKVOFFSET*counter);
+                    .get(counter).getY() + GameSinglePlayer.STACKVOFFSET*counter);
         }
         return false;
     }
@@ -67,7 +67,7 @@ public class TablePile extends CardPile {
     boolean hoveringOverPile(double x, double y){
         if (!this.empty())
             return (x > this.getX() && x < this.getX() + Card.WIDTH && y > this.getY() && y < this.getY() + Card.HEIGHT
-                    + (this.getNoCards() - 1)*MainVisual.STACKVOFFSET);
+                    + (this.getNoCards() - 1)* GameSinglePlayer.STACKVOFFSET);
 
         return super.contains(x, y);
     }
