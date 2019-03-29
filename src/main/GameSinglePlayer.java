@@ -5,17 +5,14 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import jdk.internal.org.objectweb.asm.Handle;
-import javafx.scene.canvas.Canvas;
-import java.io.FileInputStream;
+
 import java.util.ArrayList;
 
 public class GameSinglePlayer extends Application {
@@ -57,7 +54,7 @@ public class GameSinglePlayer extends Application {
         //GraphicsContext gc = canvas.getGraphicsContext2D();
 
         // Main Game Loop
-        new AnimationTimer(){
+        new AnimationTimer(){     //allows to create a timer, that is called in each frame while it is active
             @Override
             public void handle(long now) {
                 /*
@@ -67,15 +64,19 @@ public class GameSinglePlayer extends Application {
                 // Gets images from blueBoard.display()
                 ArrayList<Image>[] images = blueBoard.display();
 
+<<<<<<< HEAD
                 //
                 for (int i = 1; i < 5; i++){
+=======
+                for (int i = 1; i < 5; i++){            //Display the foundation card images
+>>>>>>> f48edce0d18cfcdcabc132b68fb23ed82f5a5526
                     if (images[i] != null){
                         for (Image foundationImage : images[i]){
-                            gc.drawImage(foundationImage, blueBoard.getFoundationPiles()[i-1].getX(), blueBoard
+                            gc.drawImage(foundationImage, blueBoard.getFoundationPiles()[i-1].getX(), blueBoard  // draw the card image at the right position
                                     .getFoundationPiles()[i-1].getY());
 
                         }
-                    } else if (images[i] == null) {
+                    } else if (images[i] == null) {   //If the array is empty draw a dark blank rectangle at the spot where the card is supposed to be
                         gc.setFill(new Color(0, 0.5, 0, 1));
                         gc.fillRect(blueBoard.getFoundationPiles()[i-1].getX(), blueBoard.getFoundationPiles()[i-1]
                                 .getY(), Card.WIDTH, Card.HEIGHT);
@@ -83,7 +84,7 @@ public class GameSinglePlayer extends Application {
                 }
 
                 int county = 0;
-                for (Image discardImages: images[0]){
+                for (Image discardImages: images[0]){    //Display the discard pile
                     gc.drawImage(discardImages, blueBoard.getDiscard().getCardList()
                             .get(county).getX(), blueBoard.getDiscard().getCardList()
                             .get(county).getY());
@@ -92,7 +93,7 @@ public class GameSinglePlayer extends Application {
 
                 for (int i = 5; i < 12; i++){
                     int counter = 0;
-                    for (Image tablePile: images[i]){
+                    for (Image tablePile: images[i]){    //Display the table pile
                         gc.drawImage(tablePile, blueBoard.getTablePiles()[i-5].getCardList().get(counter).getX(),
                                 blueBoard.getTablePiles()[i-5].getCardList().get(counter).getY());
                         counter++;
@@ -101,7 +102,7 @@ public class GameSinglePlayer extends Application {
 
                 canvas.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
-                    public void handle(MouseEvent event) {
+                    public void handle(MouseEvent event) {  //picks up the card
                         if (blueBoard.getDiscard().contains(event.getSceneX(), event.getSceneY()) && !holding && blueBoard.
                                 getDiscard().top().getFaceUp()) {
                             blueBoard.getDiscard().top().setHeld(true);
