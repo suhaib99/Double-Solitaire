@@ -31,8 +31,7 @@ public class GameSinglePlayer extends Application {
     private ArrayList<Card> selectedCards;
 
     @Override
-    public void start(Stage primaryStage) throws Exception
-    {
+    public void start(Stage primaryStage) throws Exception {
         // Vertical offset between stacked cards
         Board blueBoard = new Board(1);
         Board redBoard = new Board(2);
@@ -52,9 +51,9 @@ public class GameSinglePlayer extends Application {
         //root.getChildren().add(canvas);
 
         //GraphicsContext gc = canvas.getGraphicsContext2D();
-
+    }}
         // Main Game Loop
-        new AnimationTimer(){     //allows to create a timer, that is called in each frame while it is active
+        /*new AnimationTimer(){     //allows to create a timer, that is called in each frame while it is active
             @Override
             public void handle(long now) {
                 /*
@@ -231,12 +230,12 @@ public class GameSinglePlayer extends Application {
             */
 
 
-            }
+        /*    }
         }.start();
 
         //Displaying the contents of the stage
         primaryStage.show();
-    }
+   /* }
 
     private void removeFromPrev() {
         if (!selectedCards.isEmpty()){
@@ -252,3 +251,4 @@ public class GameSinglePlayer extends Application {
 }
 
 
+*/

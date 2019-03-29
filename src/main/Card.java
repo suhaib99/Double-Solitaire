@@ -128,10 +128,10 @@ public class Card extends Object{
 
         try {
             if (this.faceUp) {
-                cardImage = new Image(new FileInputStream(String.format("src\\res\\Decks\\pngs\\%s",
+                cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s",
                         this.getSuitName() + this.getName() + ".png")));
                 return cardImage;
-<<<<<<< HEAD
+
             } else if (!this.getFaceUp()){
                 return getBackInstance(team);
                 }
@@ -151,14 +151,6 @@ public class Card extends Object{
                 return cardImage;
             } else if (team == 2) {
                 cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/redBack.png"));
-=======
-            } else if (team == 1){
-                cardImage = new Image(new FileInputStream("src\\res\\Decks\\pngs\\blueBack.png"));
-                return cardImage;
-            } else if (team == 2){
-                cardImage = new Image(new FileInputStream("src\\res\\Decks\\pngs\\redBack.png"));
->>>>>>> f48edce0d18cfcdcabc132b68fb23ed82f5a5526
-                return cardImage;
             }
         } catch (java.io.FileNotFoundException e) {
             System.out.println("File Not Found");
