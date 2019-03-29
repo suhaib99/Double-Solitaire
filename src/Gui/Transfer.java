@@ -1,3 +1,10 @@
+/**
+ *
+ * Adapted from code by Martin P. Robillard
+ *
+ * See: https://github.com/prmr/Solitaire
+ */
+
 package Gui;
 
 import main.Board;

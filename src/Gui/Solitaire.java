@@ -1,6 +1,11 @@
+/**
+ *
+ * Adapted from code by Martin P. Robillard
+ *
+ * See: https://github.com/prmr/Solitaire
+ */
 package Gui;
 
-import apple.laf.JRSUIConstants;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
