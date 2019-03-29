@@ -128,7 +128,6 @@ public class Card extends Object{
 
         try {
             if (this.faceUp) {
-                cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s",
                 cardImage = new Image(new FileInputStream(String.format("src\\res\\Decks\\pngs\\%s",
                         this.getSuitName() + this.getName() + ".png")));
                 return cardImage;
