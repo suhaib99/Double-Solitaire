@@ -14,7 +14,8 @@ public class Solitaire extends Application {
     private static final int HEIGHT = 500;
     private static final int WIDTH = 680;
     private static final String TITLE = "Double-Solitaire";
-    private DiscardPileView discardPileView = new DiscardPileView();
+    private DiscardPileView discardPileView;
+    private DeckView deckView;
     private CardPileView[] cardStacks = new CardPileView[7];
     private FoundationPileView[] foundationStacks = new FoundationPileView[4];
 
@@ -34,6 +35,12 @@ public class Solitaire extends Application {
         root.setHgap(10);
 
         Board blueBoard = new Board(1);
+
+        discardPileView = new DiscardPileView(blueBoard);
+        root.add(discardPileView, 1, 0);
+
+        deckView = new DeckView(blueBoard);
+        root.add(deckView, 0, 0);
 
         TablePile[] tablePiles = blueBoard.getTablePiles();
 

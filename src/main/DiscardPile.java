@@ -13,7 +13,7 @@ public class DiscardPile extends CardPile {
             this.top().flip();
     }
 
-    void flipThrough(){
+   void flipThrough(){
         if(!this.empty()){
 
             if(this.top().getFaceUp()){
@@ -23,7 +23,6 @@ public class DiscardPile extends CardPile {
             this.addToFront(this.pop());
             this.top().flip();
         }
-
     }
 /*
     @Override

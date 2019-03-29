@@ -12,8 +12,8 @@ public class FoundationPile extends CardPile {
 
         if (this.empty() && aCard.isAce()) {
             return true;
-        } else if (!this.empty()) {
-            return (aCard.getSuit() == this.top().getSuit()) && (aCard.getNumber() == this.top().getNumber() - 1);
+        } else if (!this.empty() && ! aCard.isAce()) {
+            return (aCard.getSuit() == this.top().getSuit()) && (aCard.getNumber() == this.top().getNumber() + 1);
         } else if (this.empty() && !aCard.isAce()) {
             return false;
         } else{
