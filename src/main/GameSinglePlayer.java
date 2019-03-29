@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -45,22 +46,28 @@ public class GameSinglePlayer extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
 
-        Canvas canvas = new Canvas(canvasWidth, canvasHeight);
+        GridPane mainGrid = new GridPane();
 
-        root.getChildren().add(canvas);
+        root.getChildren().add(mainGrid);
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        //Canvas canvas = new Canvas(canvasWidth, canvasHeight);
+
+        //root.getChildren().add(canvas);
+
+        //GraphicsContext gc = canvas.getGraphicsContext2D();
 
         // Main Game Loop
         new AnimationTimer(){
             @Override
             public void handle(long now) {
-
+                /*
                 gc.setFill(new Color(0, 0.33, 0, 1));
                 gc.fillRect(0.0, 0.0, canvasWidth, canvasHeight);
 
+                // Gets images from blueBoard.display()
                 ArrayList<Image>[] images = blueBoard.display();
 
+                //
                 for (int i = 1; i < 5; i++){
                     if (images[i] != null){
                         for (Image foundationImage : images[i]){
@@ -129,6 +136,8 @@ public class GameSinglePlayer extends Application {
 
                                 discardTop.setX(event.getSceneX() - Card.WIDTH / 2.0);
                                 discardTop.setY(event.getSceneY() - Card.HEIGHT / 2.0);
+                                gc.drawImage(discardTop.displayCard(blueBoard.getTeam()), discardTop.getX()
+                                        , discardTop.getY());
 
                                 holding = true;
                                 selectedCards = blueBoard.discard.select();
@@ -218,6 +227,8 @@ public class GameSinglePlayer extends Application {
             void clearBoard() {
                 gc.setFill( new Color(0, 0.33, 0, 1.0) );
                 gc.fillRect(0,0, canvasWidth, canvasHeight);
+            */
+
 
             }
         }.start();

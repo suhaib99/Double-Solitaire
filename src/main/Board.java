@@ -1,8 +1,13 @@
 package main;
 
+import Gui.Transfer;
+import com.sun.tools.javac.util.Name;
 import javafx.scene.image.Image;
+import sun.tools.jconsole.Tab;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Board {
 
@@ -16,7 +21,9 @@ public class Board {
 
     protected DiscardPile discard = new DiscardPile();
 
-    Board(int team) {
+    private final ArrayList<GameListeners> Listeners = new ArrayList<>();
+
+    public Board(int team) {
 
         int cardWidth = Card.WIDTH;
         int cardHeight = Card.HEIGHT;
@@ -46,7 +53,7 @@ public class Board {
         foundationPiles = new FoundationPile[4];
 
         for (int i = 0; i < 4; i++) {
-            foundationPiles[i] = new FoundationPile();
+            foundationPiles[i] = new FoundationPile(i+1);
 
             foundationPiles[i].setX(4 * GameSinglePlayer.HOFFSET + 3 * cardWidth + i * (cardWidth+ GameSinglePlayer.HOFFSET));
             foundationPiles[i].setY(GameSinglePlayer.VOFFSET);
@@ -66,23 +73,58 @@ public class Board {
 
     }
 
-    void move(CardPile fromPile, ArrayList<Card> cards, CardPile pileTo) {
-        if (cards != null){
-            if (pileTo.canAccept(cards)) {
-                for (Card card: cards) {
-                    pileTo.addCard(card);
-                }
-            } else if (!pileTo.canAccept(cards)){
-                fromPile.addCard(cards);
+    public void move(CardPile origin, Card card, CardPile pileTo) {
+        if (origin instanceof TablePile && pileTo instanceof TablePile){
+            moveTableToTable(origin, card, pileTo);
+        } else {
+            absorbCard(origin);
+            if (pileTo instanceof FoundationPile){
+                pileTo.addToFront(card);
+            } else {
+                assert pileTo instanceof TablePile;
+                pileTo.addToFront(card);
             }
+        }
+        if (!origin.empty())
+            origin.top().flip();
+        notifyListeners();
+    }
+
+    private void moveTableToTable(CardPile origin, Card card, CardPile pileTo){
+        assert origin != null && card != null && pileTo != null;
+        assert !origin.empty();
+        Stack<Card> temp = new Stack<>();
+        Card aCard = origin.pop();
+        temp.push(aCard);
+        while (!aCard.toString().equals(card.toString())){
+            aCard = origin.pop();
+            temp.push(aCard);
+        }
+        while (!temp.empty()){
+            pileTo.addCard(temp.pop());
+        }
+
+    }
+
+    private void absorbCard(CardPile source){
+        if (source instanceof DiscardPile){
+            assert !source.empty();
+            source.pop();
+        } else if (source instanceof FoundationPile){
+            assert !source.empty();
+            source.pop();
+        } else {
+            assert source instanceof TablePile;
+            assert !source.empty();
+            source.pop();
         }
     }
 
-    void flipThroughDiscard() {
+    public void flipThroughDiscard() {
         discard.flipThrough();
     }
 
-    boolean gameOver() {
+    public boolean gameOver() {
         if (!discard.empty())
             return false;
 
@@ -92,6 +134,17 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public void addListener(GameListeners listener){
+        assert listener != null;
+        Listeners.add(listener);
+    }
+
+    void notifyListeners(){
+        for (GameListeners listeners: Listeners){
+            listeners.gameStateChanged();
+        }
     }
 
     public DiscardPile getDiscard() {
@@ -106,17 +159,80 @@ public class Board {
         return tablePiles;
     }
 
+    public CardPile[] allPiles(){
+        CardPile[] cardPiles = new CardPile[12];
+        cardPiles[1] = getDiscard();
+        for (int i = 0; i < this.getTablePiles().length; i++){
+            cardPiles[i] = getTablePiles()[i];
+        }
+
+        for (int i = 7; (i-7) < getFoundationPiles().length; i++){
+            cardPiles[i] = getFoundationPiles()[i-7];
+        }
+
+        return cardPiles;
+    }
+
     public int getTeam() {
         return team;
     }
 
+    public CardPile getCardPile(String ID){
+        CardPile[] allPiles = allPiles();
+
+        for (int i = 0; i < allPiles.length; i++){
+            if (ID.equals(allPiles[i].getID())){
+                return allPiles[i];
+            }
+        }
+        return null;
+    }
+
+    public Card getCard(String cardString){
+        CardPile[] allPiles = allPiles();
+        for (int i = 0; i < allPiles.length; i++){
+            for (int j = 0; j < allPiles[i].getNoCards(); j++){
+                if (cardString.equals(allPiles[i].getCardList().get(j).toString())){
+                    Card card = new Card(allPiles[i].getCardList().get(j));
+                    notifyListeners();
+                    return card;
+                }
+            }
+        }
+        return null;
+    }
+
+    public CardPile getSubStack(Card card, CardPile cardPile) {
+        CardPile subCardPile = new CardPile();
+        subCardPile.setID(cardPile.getID());
+        ArrayList<Card> cardList = new ArrayList<>();
+
+        ArrayList<Card> cardPileList = cardPile.getCardList();
+
+        boolean select = false;
+
+        for (Card card1: cardPileList){
+            if (card1 == card){
+                select = true;
+            }
+            if (select){
+                cardList.add(card1);
+            }
+
+        }
+
+        subCardPile.addCard(cardList);
+
+        return subCardPile;
+    }
     /**
      * discard at [0]
      * foundation at [1-4]
      * table piles at [5-11]
      * @return Image[]: array of images arraylists to display
      */
-    ArrayList<Image>[] display(){
+    void display(){
+        /*
         ArrayList<Image>[] images = new ArrayList[12];
 
         images[0] = discard.display(this.team);
@@ -133,6 +249,7 @@ public class Board {
             images[i] = tablePiles[i-5].display(this.team);
         }
         return images;
+
 
         /*
         String[] foundationLetters = new String[4];

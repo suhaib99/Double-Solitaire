@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class DiscardPile extends CardPile {
 
     DiscardPile(){
+        setID("D");
+
         if (!this.empty() && !this.top().getFaceUp())
             this.top().flip();
     }
@@ -23,7 +25,7 @@ public class DiscardPile extends CardPile {
         }
 
     }
-
+/*
     @Override
     ArrayList<Image> display(int team){
         ArrayList<Image> images = new ArrayList<>();
@@ -32,6 +34,7 @@ public class DiscardPile extends CardPile {
         }
         return images;
     }
+    */
 
     @Override
     ArrayList<Card> select(){

@@ -1,23 +1,26 @@
 package main;
 
+import Gui.Transfer;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+
 import java.util.ArrayList;
 
 public class CardPile {
     private ArrayList<Card> cardList = new ArrayList<>();
-
-    ArrayList<Card> getCardList(){
-        return new ArrayList<>(cardList);
-    }
-
-    boolean empty(){
-        return cardList.isEmpty();
-    }
-
+    private String ID;
     private int x;
     private int y;
 
-    Card top(){
+    public ArrayList<Card> getCardList(){
+        return new ArrayList<>(cardList);
+    }
+
+    public boolean empty(){
+        return cardList.isEmpty();
+    }
+
+    public Card top(){
         if (!empty())
             return cardList.get(cardList.size() - 1);
 
@@ -25,19 +28,31 @@ public class CardPile {
             return null;
     }
 
-    Card pop() {
+    public Card bottom(){
+        assert !empty();
+        return getCardList().get(0);
+    }
+
+    public Card pop() {
         if (!empty()) {
             Card return_val = this.top();
             cardList.remove(cardList.size() - 1);
             return return_val;
-        }
-        else
+        } else
             return null;
 
     }
 
     int getIndex(Card card){
         return this.cardList.indexOf(card);
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getID() {
+        return ID;
     }
 
     ArrayList<Card> select(int end){
@@ -60,6 +75,13 @@ public class CardPile {
             card1.setX(this.getX());
             card1.setY(this.getY());
         }
+    }
+
+    void merge(Transfer cardPile){
+        for (int i = 0; i < cardPile.size(); i++){
+            addCard(cardPile.getArray()[i]);
+        }
+
     }
 
     void addCard(Card card){
@@ -85,27 +107,41 @@ public class CardPile {
         this.y = y;
     }
 
-    boolean contains(double mouseX, double mouseY){
+    /*boolean contains(double mouseX, double mouseY){
         return (mouseX > this.x && mouseX < this.x + Card.WIDTH && mouseY > this.y && mouseY < this.y + Card.HEIGHT);
-    }
+    }*/
 
     int getNoCards(){
         return cardList.size();
     }
 
-    boolean canAccept(ArrayList<Card> aCard){
+    public boolean canAccept(Card aCard){
         // Overridden
         return false;
     }
 
+    @Override
+    public String toString() {
+        return ID;
+    }
+
     // team number is passed as argument
-    ArrayList<Image> display(int team){
+    /*void display(int team){
+        getChildren().clear();
+
+        int offsetMultiple = 0;
+
+        for (Card card: this.cardList){
+            
+        }
+        /*
         ArrayList<Image> images = new ArrayList<>();
         for (Card card: this.getCardList()){
             images.add(card.displayCard(team));
         }
         return images;
-    }
+
+    }*/
 
     public static void main(String[] args){
         CardPile testpile = new CardPile();

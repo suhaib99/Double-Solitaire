@@ -7,11 +7,12 @@ import javafx.scene.image.ImageView;
 
 import javax.swing.*;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Class containing Suit and Value of a playing card
  */
-public class Card{
+public class Card extends Object{
 
     private static final String[] NAMES = {"Ace", "2","3","4","5","6","7","8","9","10","Jack","Queen","King"};
     private static final String[] SUITS = {"spade", "club", "heart", "diamond"};
@@ -34,7 +35,7 @@ public class Card{
     private double x;
     private double y;
 
-    Card(int suit, int rank){
+    public Card(int suit, int rank){
         this.suit = suit;
         this.rank = rank;
         this.faceUp = false;
@@ -47,7 +48,14 @@ public class Card{
         }
     }
 
-    boolean getFaceUp(){
+    public Card(Card copyCard){
+        this.suit = copyCard.getSuit();
+        this.rank = copyCard.getNumber();
+        this.faceUp = copyCard.getFaceUp();
+        this.color = copyCard.getColor();
+    }
+
+    public boolean getFaceUp(){
         return this.faceUp;
     }
 
@@ -67,7 +75,7 @@ public class Card{
         return isHeld;
     }
 
-    void flip(){
+    public void flip(){
         this.faceUp = !this.faceUp;
     }
 
@@ -113,6 +121,11 @@ public class Card{
         isHeld = held;
     }
 
+    @Override
+    public String toString() {
+        return getSuit() + ":" + getNumber();
+    }
+
     // team 1: blue, team 2: red
     public Image displayCard(int team){
         Image cardImage;
@@ -122,18 +135,31 @@ public class Card{
                 cardImage = new Image(new FileInputStream(String.format("Double-Solitaire/src/res/Decks/pngs/%s",
                         this.getSuitName() + this.getName() + ".png")));
                 return cardImage;
-            } else if (team == 1){
+            } else if (!this.getFaceUp()){
+                return getBackInstance(team);
+                }
+
+            } catch(java.io.FileNotFoundException e) {
+                System.out.println("FileNotFound");
+            }
+        return null;
+        }
+
+    public Image getBackInstance(int team) {
+        Image cardImage;
+
+        try {
+            if (team == 1) {
                 cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/blueBack.png"));
                 return cardImage;
-            } else if (team == 2){
+            } else if (team == 2) {
                 cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/redBack.png"));
                 return cardImage;
             }
+        } catch (java.io.FileNotFoundException e) {
+            System.out.println("File Not Found");
+        }
 
-        }
-        catch(java.io.FileNotFoundException e) {
-            System.out.println("FileNotFound");
-        }
         return null;
     }
 

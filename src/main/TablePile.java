@@ -7,6 +7,8 @@ public class TablePile extends CardPile {
     TablePile(int numCards, DeckPile deck){
         ArrayList<Card> cards = deck.select(numCards);
 
+        setID("T"+numCards);
+
         super.addCard(cards);
 
         if (!this.empty())
@@ -44,8 +46,8 @@ public class TablePile extends CardPile {
         return tempList;
     }
 
-    @Override
-    boolean contains(double mouseX, double mouseY){
+    /*@Override
+    public boolean contains(double mouseX, double mouseY){
         if (this.getNoCards() == 1){
             super.contains(mouseX, mouseY);
         } else if (!this.empty()){
@@ -62,26 +64,27 @@ public class TablePile extends CardPile {
                     .get(counter).getY() + GameSinglePlayer.STACKVOFFSET*counter);
         }
         return false;
-    }
+    }*/
 
-    boolean hoveringOverPile(double x, double y){
+    /*boolean hoveringOverPile(double x, double y){
         if (!this.empty())
             return (x > this.getX() && x < this.getX() + Card.WIDTH && y > this.getY() && y < this.getY() + Card.HEIGHT
                     + (this.getNoCards() - 1)* GameSinglePlayer.STACKVOFFSET);
 
         return super.contains(x, y);
-    }
+    }*/
 
     @Override
-    boolean canAccept(ArrayList<Card> aCardList) {
+    public boolean canAccept(Card card) {
+        assert card != null;
+
         if (this.empty())
-            return aCardList.get(0).isKing();
+            return card.isKing();
 
         if (!this.top().getFaceUp())
             return false;
 
-        return (this.top().getColor() != aCardList.get(0).getColor()) && (this.top().getNumber() == aCardList.get(0)
-                .getNumber() + 1);
+        return (this.top().getColor() != card.getColor()) && (this.top().getNumber() == card.getNumber() + 1);
     }
 
     void topDown(){
