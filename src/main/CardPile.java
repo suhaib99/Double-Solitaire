@@ -111,7 +111,7 @@ public class CardPile {
         return (mouseX > this.x && mouseX < this.x + Card.WIDTH && mouseY > this.y && mouseY < this.y + Card.HEIGHT);
     }*/
 
-    int getNoCards(){
+    public int getNoCards(){
         return cardList.size();
     }
 

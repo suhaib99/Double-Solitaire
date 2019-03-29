@@ -18,10 +18,17 @@ public class Board {
 
     private int team;
 
-
     private DiscardPile discard = new DiscardPile();
 
     private final ArrayList<GameListeners> Listeners = new ArrayList<>();
+
+    private boolean load = false;
+
+    public Board(String[] values){
+        for (int i = 0; i < values.length; i++){
+
+        }
+    }
 
     public Board(int team) {
 
@@ -29,46 +36,52 @@ public class Board {
         int cardHeight = Card.HEIGHT;
 
         tablePiles = new TablePile[7];
+        foundationPiles = new FoundationPile[4];
 
         this.team = team;
 
-        for (int i = 0; i < 7; i++) {
-            int j = i + 1;
+        if (!load) {
 
-            tablePiles[i] = new TablePile(j, deck);
+            for (int i = 0; i < 7; i++) {
+                int j = i + 1;
 
-            tablePiles[i].setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
-            tablePiles[i].setY(2 * GameSinglePlayer.VOFFSET + cardHeight);
+                tablePiles[i] = new TablePile(j, deck);
 
-            for (int n = 0; n < tablePiles[i].getNoCards(); n++) {
-                Card card = tablePiles[i].getCardList().get(n);
+                tablePiles[i].setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
+                tablePiles[i].setY(2 * GameSinglePlayer.VOFFSET + cardHeight);
 
-                card.setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
-                card.setY(2 * GameSinglePlayer.VOFFSET + cardHeight + n * GameSinglePlayer.STACKVOFFSET);
+                for (int n = 0; n < tablePiles[i].getNoCards(); n++) {
+                    Card card = tablePiles[i].getCardList().get(n);
+
+                    card.setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
+                    card.setY(2 * GameSinglePlayer.VOFFSET + cardHeight + n * GameSinglePlayer.STACKVOFFSET);
+
+                }
 
             }
 
-        }
 
-        foundationPiles = new FoundationPile[4];
+            for (int i = 0; i < 4; i++) {
+                foundationPiles[i] = new FoundationPile(i + 1);
 
-        for (int i = 0; i < 4; i++) {
-            foundationPiles[i] = new FoundationPile(i+1);
-
-            foundationPiles[i].setX(4 * GameSinglePlayer.HOFFSET + 3 * cardWidth + i * (cardWidth+ GameSinglePlayer.HOFFSET));
-            foundationPiles[i].setY(GameSinglePlayer.VOFFSET);
-        }
+                foundationPiles[i].setX(4 * GameSinglePlayer.HOFFSET + 3 * cardWidth + i * (cardWidth + GameSinglePlayer.HOFFSET));
+                foundationPiles[i].setY(GameSinglePlayer.VOFFSET);
+            }
 
 
-        discard.addCard(deck.getCardList());
+            discard.addCard(deck.getCardList());
 
-        discard.setX(GameSinglePlayer.HOFFSET);
-        discard.setY(GameSinglePlayer.VOFFSET);
+            discard.setX(GameSinglePlayer.HOFFSET);
+            discard.setY(GameSinglePlayer.VOFFSET);
 
-        for (int i = 0; i < discard.getNoCards(); i++){
-            Card card1 = discard.getCardList().get(i);
-            card1.setX(GameSinglePlayer.HOFFSET);
-            card1.setY(GameSinglePlayer.VOFFSET);
+            for (int i = 0; i < discard.getNoCards(); i++) {
+                Card card1 = discard.getCardList().get(i);
+                card1.setX(GameSinglePlayer.HOFFSET);
+                card1.setY(GameSinglePlayer.VOFFSET);
+            }
+            notifyListeners();
+        } else if (load){
+
         }
 
     }
@@ -103,7 +116,10 @@ public class Board {
         while (!temp.empty()){
             pileTo.addCard(temp.pop());
         }
+    }
 
+    public void setLoad(boolean load) {
+        this.load = load;
     }
 
     private void absorbCard(CardPile source){
@@ -160,15 +176,15 @@ public class Board {
         return tablePiles;
     }
 
-    private CardPile[] allPiles(){
+    public CardPile[] allPiles(){
         CardPile[] cardPiles = new CardPile[12];
         cardPiles[0] = getDiscard();
-        for (int i = 1; i < this.getTablePiles().length; i++){
-            cardPiles[i] = getTablePiles()[i];
+        for (int i = 1; (i-1) < this.getTablePiles().length; i++){
+            cardPiles[i] = getTablePiles()[i-1];
         }
 
-        for (int i = 7; (i-7) < getFoundationPiles().length; i++){
-            cardPiles[i] = getFoundationPiles()[i-7];
+        for (int i = 8; (i-8) < getFoundationPiles().length; i++){
+            cardPiles[i] = getFoundationPiles()[i-8];
         }
 
         return cardPiles;

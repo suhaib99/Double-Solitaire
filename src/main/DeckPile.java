@@ -53,7 +53,7 @@ public class DeckPile extends CardPile {
     }
 
     @Override
-    int getNoCards(){
+    public int getNoCards(){
         return shuffledPile.getCardList().size();
     }
 

@@ -1,10 +1,11 @@
+/* Old Class
+
+
 package main;
 
 import java.util.Scanner;
 
-/**
- *
- */
+
 public class Main {
 
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class Main {
 
 
 
-            /*
+
             System.out.println("Make your move");
             String inputCommand = scanner.nextLine();
 
@@ -66,7 +67,8 @@ public class Main {
                 System.out.println("Entry out of range, please enter a pile betwteen 1 and 7");
 
             }
-            */
+
         }
     }
 }
+*/
