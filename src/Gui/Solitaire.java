@@ -7,16 +7,16 @@
 package Gui;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import main.Board;
-import main.FoundationPile;
-import main.TablePile;
+import javafx.stage.WindowEvent;
+import main.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -76,6 +76,8 @@ public class Solitaire extends Application {
         Board blueBoard = new Board(blueSaves, 1);
         Board redBoard = new Board(redSaves, 2);
 
+        bufferedReader.close();
+
         discardPileViewblue = new DiscardPileView(blueBoard);
         Blue.add(discardPileViewblue, 1, 0);
         discardPileViewred = new DiscardPileView(redBoard);
@@ -115,6 +117,47 @@ public class Solitaire extends Application {
         }
 
         root.getChildren().addAll(Blue, Red);
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try{
+                    BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("SavedState.txt"));
+                    CardPile[] bluePiles = blueBoard.allPiles();
+                    CardPile[] redPiles = redBoard.allPiles();
+
+                    for (int i = 0; i < 12; i++){
+                        String result = "";
+                        ArrayList<Card> cards = bluePiles[i].getCardList();
+                        for (Card card: cards){
+                            result += card.toString() + Transfer.SEPARATOR;
+                        }
+                        if (result.length() > 0){
+                            result = result.substring(0, result.length()-1);
+                        }
+                        bufferedWriter.write(result+"\n");
+
+                    }
+                    for (int i = 0; i < 12; i++){
+                        String result = "";
+                        ArrayList<Card> cards = redPiles[i].getCardList();
+                        for (Card card: cards){
+                            result += card.toString() + Transfer.SEPARATOR;
+                        }
+                        if (result.length() > 0){
+                            result = result.substring(0, result.length()-1);
+                        }
+                        bufferedWriter.write(result+"\n");
+
+                    }
+                    bufferedWriter.close();
+
+
+                }catch(IOException e) {
+
+                 }
+            }
+        });
 
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));

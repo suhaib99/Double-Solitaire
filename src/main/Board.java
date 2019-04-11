@@ -1,11 +1,6 @@
 package main;
 
 import Gui.Transfer;
-import com.sun.tools.javac.util.Name;
-import javafx.scene.image.Image;
-import sun.tools.jconsole.Tab;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 

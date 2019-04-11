@@ -111,24 +111,6 @@ public class CardPile {
         return ID;
     }
 
-    // team number is passed as argument
-    /*void display(int team){
-        getChildren().clear();
-
-        int offsetMultiple = 0;
-
-        for (Card card: this.cardList){
-            
-        }
-        /*
-        ArrayList<Image> images = new ArrayList<>();
-        for (Card card: this.getCardList()){
-            images.add(card.displayCard(team));
-        }
-        return images;
-
-    }*/
-
     public static void main(String[] args){
         CardPile testpile = new CardPile();
 
