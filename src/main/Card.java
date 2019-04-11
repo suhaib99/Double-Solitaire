@@ -28,9 +28,6 @@ public class Card extends Object{
     // 0: Red, 1: Black
     private int color;
 
-    private double x;
-    private double y;
-
     public Card(int suit, int rank){
         this.suit = suit;
         this.rank = rank;
@@ -95,22 +92,6 @@ public class Card extends Object{
 
     String getSuitName(){
         return SUITS[this.getSuit() - 1];
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public void setX(double x) {
-        this.x = x;
     }
 
     public void setHeld(boolean held) {

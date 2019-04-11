@@ -66,7 +66,10 @@ public class Transfer {
     }
 
     public Card getTop(){
-        return cards[0];
+        if (cards.length != 0)
+            return cards[0];
+        else
+            return null;
     }
 
     public int size(){

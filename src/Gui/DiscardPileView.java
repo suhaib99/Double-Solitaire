@@ -33,9 +33,13 @@ public class DiscardPileView extends HBox implements GameListeners {
     public void gameStateChanged() {
         getChildren().get(0).setVisible(true);
         Card topCard = gameBoard.getDiscard().top();
-        ImageView imageView = (ImageView)getChildren().get(0);
-        imageView.setImage(topCard.displayCard(gameBoard.getTeam()));
-        dragHandler.setCard(topCard);
+        ImageView imageView = (ImageView) getChildren().get(0);
+        if (!gameBoard.getDiscard().empty()) {
+            imageView.setImage(topCard.displayCard(gameBoard.getTeam()));
+            dragHandler.setCard(topCard);
+        } else {
+            imageView.setImage(new Card(1, 1).getBackInstance(gameBoard.getTeam()));
         }
-
     }
+
+}

@@ -9,8 +9,6 @@ import java.util.ArrayList;
 public class CardPile {
     private ArrayList<Card> cardList = new ArrayList<>();
     private String ID;
-    private int x;
-    private int y;
 
     public ArrayList<Card> getCardList(){
         return new ArrayList<>(cardList);
@@ -71,10 +69,7 @@ public class CardPile {
 
     void addCard(ArrayList<Card> card){
         cardList.addAll(card);
-        for (Card card1: card) {
-            card1.setX(this.getX());
-            card1.setY(this.getY());
-        }
+
     }
 
     void merge(Transfer cardPile){
@@ -86,25 +81,7 @@ public class CardPile {
 
     void addCard(Card card){
         cardList.add(card);
-        card.setY(this.getX());
-        card.setX(this.getY());
         card.setHeld(false);
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     /*boolean contains(double mouseX, double mouseY){

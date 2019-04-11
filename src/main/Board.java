@@ -40,23 +40,11 @@ public class Board {
 
         this.team = team;
 
-        if (!load) {
 
             for (int i = 0; i < 7; i++) {
                 int j = i + 1;
 
                 tablePiles[i] = new TablePile(j, deck);
-
-                tablePiles[i].setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
-                tablePiles[i].setY(2 * GameSinglePlayer.VOFFSET + cardHeight);
-
-                for (int n = 0; n < tablePiles[i].getNoCards(); n++) {
-                    Card card = tablePiles[i].getCardList().get(n);
-
-                    card.setX(GameSinglePlayer.HOFFSET + i * (GameSinglePlayer.HOFFSET + cardWidth));
-                    card.setY(2 * GameSinglePlayer.VOFFSET + cardHeight + n * GameSinglePlayer.STACKVOFFSET);
-
-                }
 
             }
 
@@ -64,27 +52,15 @@ public class Board {
             for (int i = 0; i < 4; i++) {
                 foundationPiles[i] = new FoundationPile(i + 1);
 
-                foundationPiles[i].setX(4 * GameSinglePlayer.HOFFSET + 3 * cardWidth + i * (cardWidth + GameSinglePlayer.HOFFSET));
-                foundationPiles[i].setY(GameSinglePlayer.VOFFSET);
             }
 
 
             discard.addCard(deck.getCardList());
 
-            discard.setX(GameSinglePlayer.HOFFSET);
-            discard.setY(GameSinglePlayer.VOFFSET);
-
-            for (int i = 0; i < discard.getNoCards(); i++) {
-                Card card1 = discard.getCardList().get(i);
-                card1.setX(GameSinglePlayer.HOFFSET);
-                card1.setY(GameSinglePlayer.VOFFSET);
-            }
             notifyListeners();
-        } else if (load){
-
         }
 
-    }
+
 
     public void move(CardPile origin, Card card, CardPile pileTo) {
         if (origin instanceof TablePile && pileTo instanceof TablePile){
@@ -93,14 +69,18 @@ public class Board {
             absorbCard(origin);
             if (pileTo instanceof FoundationPile){
                 pileTo.addCard(card);
+
             } else {
                 assert pileTo instanceof TablePile;
                 pileTo.addCard(card);
+
             }
         }
-        if (!origin.empty())
+        if (!origin.empty() && !origin.top().getFaceUp())
             origin.top().flip();
+
         notifyListeners();
+
     }
 
     private void moveTableToTable(CardPile origin, Card card, CardPile pileTo){

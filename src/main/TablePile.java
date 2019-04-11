@@ -18,8 +18,6 @@ public class TablePile extends CardPile {
     @Override
     void addCard(ArrayList<Card> aCardList){
         for (Card card: aCardList){
-            card.setX(this.getX());
-            card.setY(this.getY() + (this.getNoCards()-1) * GameSinglePlayer.STACKVOFFSET);
             card.setHeld(false);
         }
 

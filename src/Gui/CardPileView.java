@@ -83,7 +83,8 @@ public class CardPileView extends StackPane implements GameListeners {
             public void handle(DragEvent event) {
                 if (event.getGestureSource() != imageView && event.getDragboard().hasString()){
                     Transfer cardTransfer = new Transfer(event.getDragboard().getString(), gameBoard);
-                    if (cardPile.canAccept(cardTransfer.getTop())){
+                    Card top = cardTransfer.getTop();
+                    if (top != null && cardPile.canAccept(cardTransfer.getTop())){
                         event.acceptTransferModes(TransferMode.MOVE);
                     }
                 }
@@ -98,7 +99,8 @@ public class CardPileView extends StackPane implements GameListeners {
             public void handle(DragEvent event) {
 
                 Transfer cardTransfer = new Transfer(event.getDragboard().getString(), gameBoard);
-                if (cardPile.canAccept(cardTransfer.getTop())){
+                Card top = cardTransfer.getTop();
+                if (top != null && cardPile.canAccept(cardTransfer.getTop())){
                     image.setEffect(new DropShadow());
                 }
                 event.consume();
@@ -124,7 +126,8 @@ public class CardPileView extends StackPane implements GameListeners {
                 boolean success = false;
                 if(db.hasString()){
                     Transfer transfer = new Transfer(db.getString(), gameBoard);
-                    if (cardPile.canAccept(transfer.getTop())) {
+                    Card top = transfer.getTop();
+                    if (top != null && cardPile.canAccept(top)) {
                         gameBoard.move(transfer.getOrigin(), transfer.getTop(), cardPile);
                     }
                     success = true;
