@@ -43,10 +43,12 @@ public class FoundationPileView extends StackPane implements GameListeners {
         getChildren().add(imageView);
         this.dragHandler = new CardDragHandler(imageView, foundationPile);
         imageView.setOnDragDetected(dragHandler);
+
         setOnDragOver(createOnDragOverHandler(imageView));
         setOnDragEntered(createOnDragEnteredHandler());
         setOnDragExited(createOnDragExitedHandler());
         setOnDragDropped(createOnDragDroppedHandler());
+
         gameBoard.addListener(this);
     }
 
@@ -77,10 +79,12 @@ public class FoundationPileView extends StackPane implements GameListeners {
         return new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                Transfer transfer = new Transfer(event.getDragboard().getString(), gameBoard);
-                Card top = transfer.getTop();
-                if (transfer.size()== 1 && top != null && foundationPile.canAccept(top)){
-                    setStyle(BORDER_STYLE_DRAGGED);
+                if (gameBoard.getTurn()){
+                    Transfer transfer = new Transfer(event.getDragboard().getString(), gameBoard);
+                    Card top = transfer.getTop();
+                    if (transfer.size()== 1 && top != null && foundationPile.canAccept(top)){
+                        setStyle(BORDER_STYLE_DRAGGED);
+                    }
                 }
                 event.consume();
             }
@@ -90,18 +94,21 @@ public class FoundationPileView extends StackPane implements GameListeners {
         return new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasString()){
-                    Transfer transfer = new Transfer(event.getDragboard().getString(), gameBoard);
-                    Card top = transfer.getTop();
-                    if (transfer.size() == 1 && top != null && foundationPile.canAccept(top)) {
-                        gameBoard.move(transfer.getOrigin(), transfer.getTop(), foundationPile);
+                if (gameBoard.getTurn()) {
+                    Dragboard db = event.getDragboard();
+                    boolean success = false;
+                    if (db.hasString()) {
+                        Transfer transfer = new Transfer(event.getDragboard().getString(), gameBoard);
+                        Card top = transfer.getTop();
+                        if (transfer.size() == 1 && top != null && foundationPile.canAccept(top)) {
+                            gameBoard.move(transfer.getOrigin(), transfer.getTop(), foundationPile);
+                        }
+                        success = true;
                     }
-                    success = true;
-                }
 
-                event.setDropCompleted(success);
+
+                    event.setDropCompleted(success);
+                }
                 event.consume();
 
             }
@@ -111,7 +118,7 @@ public class FoundationPileView extends StackPane implements GameListeners {
         return new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                if (event.getGestureSource() != imageView && event.getDragboard().hasString()){
+                if (event.getGestureSource() != imageView && event.getDragboard().hasString() && gameBoard.getTurn()){
                     Transfer transfer = new Transfer(event.getDragboard().getString(), gameBoard);
                     Card top = transfer.getTop();
                     if (transfer.size() == 1 && top != null && foundationPile.canAccept(top)){

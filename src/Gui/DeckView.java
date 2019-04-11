@@ -32,15 +32,18 @@ public class DeckView extends HBox implements GameListeners {
         deckButton.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ((Button)(event.getSource())).setStyle(BUTTON_STYLE_PRESSED);
+                if (gameBoard.getTurn())
+                    ((Button)(event.getSource())).setStyle(BUTTON_STYLE_PRESSED);
             }
         });
 
         deckButton.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                ((Button)(event.getSource())).setStyle(BUTTON_STYLE_NORMAL);
-                gameBoard.flipThroughDiscard();
+                if (gameBoard.getTurn()){
+                    ((Button)(event.getSource())).setStyle(BUTTON_STYLE_NORMAL);
+                    gameBoard.flipThroughDiscard();
+                }
             }
         });
 

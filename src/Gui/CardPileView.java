@@ -68,10 +68,12 @@ public class CardPileView extends StackPane implements GameListeners {
         return new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (gameBoard.getTurn()){
                 Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 content.putString(Transfer.serialize(gameBoard.getSubStack(card, cardPile)));
                 db.setContent(content);
+                }
                 event.consume();
             }
         };
@@ -81,7 +83,7 @@ public class CardPileView extends StackPane implements GameListeners {
         return new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                if (event.getGestureSource() != imageView && event.getDragboard().hasString()){
+                if (event.getGestureSource() != imageView && event.getDragboard().hasString() && gameBoard.getTurn()){
                     Transfer cardTransfer = new Transfer(event.getDragboard().getString(), gameBoard);
                     Card top = cardTransfer.getTop();
                     if (top != null && cardPile.canAccept(cardTransfer.getTop())){
@@ -97,11 +99,12 @@ public class CardPileView extends StackPane implements GameListeners {
         return new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-
+                if (gameBoard.getTurn()){
                 Transfer cardTransfer = new Transfer(event.getDragboard().getString(), gameBoard);
                 Card top = cardTransfer.getTop();
                 if (top != null && cardPile.canAccept(cardTransfer.getTop())){
                     image.setEffect(new DropShadow());
+                }
                 }
                 event.consume();
             }
@@ -112,7 +115,8 @@ public class CardPileView extends StackPane implements GameListeners {
         return new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                image.setEffect(null);
+                if (gameBoard.getTurn())
+                    image.setEffect(null);
                 event.consume();
             }
         };
@@ -122,19 +126,20 @@ public class CardPileView extends StackPane implements GameListeners {
         return new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if(db.hasString()){
-                    Transfer transfer = new Transfer(db.getString(), gameBoard);
-                    Card top = transfer.getTop();
-                    if (top != null && cardPile.canAccept(top)) {
-                        gameBoard.move(transfer.getOrigin(), transfer.getTop(), cardPile);
-                    }
-                    success = true;
-                }
+               if (gameBoard.getTurn()) {
+                   Dragboard db = event.getDragboard();
+                   boolean success = false;
+                   if (db.hasString()) {
+                       Transfer transfer = new Transfer(db.getString(), gameBoard);
+                       Card top = transfer.getTop();
+                       if (top != null && cardPile.canAccept(top)) {
+                           gameBoard.move(transfer.getOrigin(), transfer.getTop(), cardPile);
+                       }
+                       success = true;
+                   }
 
-                event.setDropCompleted(success);
-
+                   event.setDropCompleted(success);
+               }
                 event.consume();
 
             }

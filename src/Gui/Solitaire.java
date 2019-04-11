@@ -9,12 +9,17 @@ package Gui;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.scene.control.Button;
 import main.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,11 +47,16 @@ public class Solitaire extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle(TITLE);
 
-        VBox root = new VBox();
+        VBox Game = new VBox();
+
+        HBox root = new HBox();
 
         root.setStyle("-fx-background-color: green");
+        root.setSpacing(5);
 
-        root.setSpacing(150);
+        Game.setStyle("-fx-background-color: green");
+
+        Game.setSpacing(125);
 
         GridPane Blue = new GridPane();
         GridPane Red = new GridPane();
@@ -60,6 +70,8 @@ public class Solitaire extends Application {
 
         Red.setHgap(10);
         Red.setVgap(10);
+
+        Button endTurn = new Button("Next Turn");
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader("SavedState.txt"));
         String[] blueSaves = new String[12];
@@ -76,7 +88,23 @@ public class Solitaire extends Application {
         Board blueBoard = new Board(blueSaves, 1);
         Board redBoard = new Board(redSaves, 2);
 
+        redBoard.setTurn(true);
+        blueBoard.setTurn(false);
+
         bufferedReader.close();
+
+        endTurn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (redBoard.getTurn()) {
+                    redBoard.setTurn(false);
+                    blueBoard.setTurn(true);
+                } else if (blueBoard.getTurn()) {
+                    blueBoard.setTurn(false);
+                    redBoard.setTurn(true);
+                }
+            }
+        });
 
         discardPileViewblue = new DiscardPileView(blueBoard);
         Blue.add(discardPileViewblue, 1, 0);
@@ -116,7 +144,10 @@ public class Solitaire extends Application {
             Red.add(FoundationStacksred[i], i+3, 0);
         }
 
-        root.getChildren().addAll(Blue, Red);
+        root.getChildren().add(Game);
+        root.getChildren().add(endTurn);
+
+        Game.getChildren().addAll(Blue, Red);
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -126,35 +157,13 @@ public class Solitaire extends Application {
                     CardPile[] bluePiles = blueBoard.allPiles();
                     CardPile[] redPiles = redBoard.allPiles();
 
-                    for (int i = 0; i < 12; i++){
-                        String result = "";
-                        ArrayList<Card> cards = bluePiles[i].getCardList();
-                        for (Card card: cards){
-                            result += card.toString() + Transfer.SEPARATOR;
-                        }
-                        if (result.length() > 0){
-                            result = result.substring(0, result.length()-1);
-                        }
-                        bufferedWriter.write(result+"\n");
-
-                    }
-                    for (int i = 0; i < 12; i++){
-                        String result = "";
-                        ArrayList<Card> cards = redPiles[i].getCardList();
-                        for (Card card: cards){
-                            result += card.toString() + Transfer.SEPARATOR;
-                        }
-                        if (result.length() > 0){
-                            result = result.substring(0, result.length()-1);
-                        }
-                        bufferedWriter.write(result+"\n");
-
-                    }
+                    SaveCodeState(bluePiles, bufferedWriter);
+                    SaveCodeState(redPiles, bufferedWriter);
                     bufferedWriter.close();
 
 
                 }catch(IOException e) {
-
+                    System.out.println("Cannot Save");
                  }
             }
         });
@@ -162,5 +171,24 @@ public class Solitaire extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
+    }
+
+    private static void SaveCodeState(CardPile[] bluePiles, BufferedWriter bufferedWriter) throws IOException {
+        for (int i = 0; i < 12; i++){
+            String result = "";
+            ArrayList<Card> cards = bluePiles[i].getCardList();
+            for (Card card: cards){
+                if (card.getFaceUp()){
+                    result += "1/" + card.toString() + Transfer.SEPARATOR;
+                } else {
+                    result += "0/" + card.toString() + Transfer.SEPARATOR;
+                }
+            }
+            if (result.length() > 0){
+                result = result.substring(0, result.length()-1);
+            }
+            bufferedWriter.write(result+"\n");
+
+        }
     }
 }

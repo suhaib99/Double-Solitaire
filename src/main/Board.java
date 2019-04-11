@@ -17,7 +17,7 @@ public class Board {
 
     private final ArrayList<GameListeners> Listeners = new ArrayList<>();
 
-    private boolean load = false;
+    private boolean turn = false;
 
     public Board(int team) {
         this.team = team;
@@ -98,6 +98,8 @@ public class Board {
                 for (int i = 0; i < 4; i++){
                     foundationPiles[i] = new FoundationPile(i+1 , produceCards(strings[i+8]));
                     foundationPiles[i].setTeam(this.getTeam());
+                    if (!foundationPiles[i].empty() && !foundationPiles[i].top().getFaceUp())
+                        foundationPiles[i].top().flip();
                 }
 
             }
@@ -144,8 +146,12 @@ public class Board {
         }
     }
 
-    public void setLoad(boolean load) {
-        this.load = load;
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    public boolean getTurn(){
+        return this.turn;
     }
 
     private void absorbCard(CardPile source){
@@ -226,9 +232,15 @@ public class Board {
         for (int i = 0; i < cardString.length; i++){
             String[] cardStuff = cardString[i].split(":");
             if (containsDigit(cardStuff[0]) && containsDigit(cardStuff[1])) {
-                int suit = Integer.parseInt(cardStuff[0]);
+                String[] cardUp = cardStuff[0].split("/");
+                int suit = Integer.parseInt(cardUp[1]);
                 int number = Integer.parseInt(cardStuff[1]);
                 Card card = new Card(suit, number);
+
+                if (cardUp[0].equals("1")){
+                    card.flip();
+                }
+
                 pile.addCard(card);
             }
 
