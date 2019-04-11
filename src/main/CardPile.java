@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class CardPile {
     private ArrayList<Card> cardList = new ArrayList<>();
     private String ID;
+    private int team;
 
     public ArrayList<Card> getCardList(){
         return new ArrayList<>(cardList);
@@ -56,6 +57,14 @@ public class CardPile {
     ArrayList<Card> select(int end){
         //do nothing to be overridden
         return null;
+    }
+
+    public void setTeam(int team) {
+        this.team = team;
+    }
+
+    public int getTeam() {
+        return team;
     }
 
     ArrayList<Card> select(){

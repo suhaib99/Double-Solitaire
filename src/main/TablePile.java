@@ -15,6 +15,16 @@ public class TablePile extends CardPile {
             this.top().flip();
     }
 
+    TablePile(int numCards, CardPile cardPile){
+
+        super.addCard(cardPile.getCardList());
+
+        setID("T"+numCards);
+
+        if (!this.empty() && !this.top().getFaceUp())
+            this.top().flip();
+    }
+
     @Override
     void addCard(ArrayList<Card> aCardList){
         for (Card card: aCardList){
@@ -43,34 +53,6 @@ public class TablePile extends CardPile {
         }
         return tempList;
     }
-
-    /*@Override
-    public boolean contains(double mouseX, double mouseY){
-        if (this.getNoCards() == 1){
-            super.contains(mouseX, mouseY);
-        } else if (!this.empty()){
-
-            int counter1 = this.select().size();
-            int counter;
-            if (counter1 != 0)
-                counter = this.getNoCards() - counter1;
-            else
-                counter = 0;
-
-            return (mouseX > this.getCardList().get(counter).getX() && mouseX < this.getCardList().get(counter).getX()
-                    + Card.WIDTH && mouseY > this.getCardList().get(counter).getY() && mouseY < this.getCardList()
-                    .get(counter).getY() + GameSinglePlayer.STACKVOFFSET*counter);
-        }
-        return false;
-    }*/
-
-    /*boolean hoveringOverPile(double x, double y){
-        if (!this.empty())
-            return (x > this.getX() && x < this.getX() + Card.WIDTH && y > this.getY() && y < this.getY() + Card.HEIGHT
-                    + (this.getNoCards() - 1)* GameSinglePlayer.STACKVOFFSET);
-
-        return super.contains(x, y);
-    }*/
 
     @Override
     public boolean canAccept(Card card) {

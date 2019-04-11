@@ -13,7 +13,10 @@ public class DeckPile extends CardPile {
         setID("Deck");
         for (int i = 1; i <= 13; i++) {
             for (int j = 1; j <= 4; j++) {
-                startPile.addCard(new Card(j, i));
+                Card card = new Card(j, i);
+                card.setTeam(this.getTeam());
+                startPile.addCard(card);
+
             }
         }
         ArrayList<Card> shuffledList = startPile.getCardList();

@@ -24,63 +24,114 @@ public class Board {
 
     private boolean load = false;
 
-    public Board(String[] values){
-        for (int i = 0; i < values.length; i++){
-
-        }
-    }
-
     public Board(int team) {
+        this.team = team;
 
-        int cardWidth = Card.WIDTH;
-        int cardHeight = Card.HEIGHT;
+        deck.setTeam(this.getTeam());
 
         tablePiles = new TablePile[7];
         foundationPiles = new FoundationPile[4];
-
-        this.team = team;
-
 
             for (int i = 0; i < 7; i++) {
                 int j = i + 1;
 
                 tablePiles[i] = new TablePile(j, deck);
+                tablePiles[i].setTeam(this.getTeam());
 
             }
 
 
             for (int i = 0; i < 4; i++) {
                 foundationPiles[i] = new FoundationPile(i + 1);
-
+                foundationPiles[i].setTeam(this.getTeam());
             }
 
 
             discard.addCard(deck.getCardList());
+            discard.setTeam(this.getTeam());
 
+            notifyListeners();
+        }
+
+        public Board(String[] strings, int team){
+            this.team = team;
+            int counter = 0;
+
+            for (int i = 0; i < strings.length; i++){
+                if (strings[i].isEmpty()){
+                    counter++;
+                }
+            }
+
+            if (counter >= 12){
+                deck.setTeam(this.getTeam());
+
+                tablePiles = new TablePile[7];
+                foundationPiles = new FoundationPile[4];
+
+                for (int i = 0; i < 7; i++) {
+                    int j = i + 1;
+
+                    tablePiles[i] = new TablePile(j, deck);
+                    tablePiles[i].setTeam(this.getTeam());
+
+                }
+
+
+                for (int i = 0; i < 4; i++) {
+                    foundationPiles[i] = new FoundationPile(i + 1);
+                    foundationPiles[i].setTeam(this.getTeam());
+                }
+
+
+                discard.addCard(deck.getCardList());
+                discard.setTeam(this.getTeam());
+
+                notifyListeners();
+            } else if (counter < 12){
+                tablePiles = new TablePile[7];
+                foundationPiles = new FoundationPile[4];
+
+                discard.addCard(produceCards(strings[0]).getCardList());
+                discard.setTeam(this.getTeam());
+
+                for (int i = 0; i < 7; i++){
+                    tablePiles[i] = new TablePile(i+1, produceCards(strings[i+1]));
+                    tablePiles[i].setTeam(this.getTeam());
+                }
+
+                for (int i = 0; i < 4; i++){
+                    foundationPiles[i] = new FoundationPile(i+1 , produceCards(strings[i+8]));
+                    foundationPiles[i].setTeam(this.getTeam());
+                }
+
+            }
             notifyListeners();
         }
 
 
 
     public void move(CardPile origin, Card card, CardPile pileTo) {
-        if (origin instanceof TablePile && pileTo instanceof TablePile){
-            moveTableToTable(origin, card, pileTo);
-        } else {
-            absorbCard(origin);
-            if (pileTo instanceof FoundationPile){
-                pileTo.addCard(card);
+        if (origin.getTeam() == this.getTeam()) {
 
+            if (origin instanceof TablePile && pileTo instanceof TablePile) {
+                moveTableToTable(origin, card, pileTo);
             } else {
-                assert pileTo instanceof TablePile;
-                pileTo.addCard(card);
+                absorbCard(origin);
+                if (pileTo instanceof FoundationPile) {
+                    pileTo.addCard(card);
 
+                } else {
+                    assert pileTo instanceof TablePile;
+                    pileTo.addCard(card);
+
+                }
             }
+            if (!origin.empty() && !origin.top().getFaceUp())
+                origin.top().flip();
+
+            notifyListeners();
         }
-        if (!origin.empty() && !origin.top().getFaceUp())
-            origin.top().flip();
-
-        notifyListeners();
-
     }
 
     private void moveTableToTable(CardPile origin, Card card, CardPile pileTo){
@@ -172,6 +223,36 @@ public class Board {
 
     public int getTeam() {
         return team;
+    }
+
+    public CardPile produceCards(String ID){
+        CardPile pile = new CardPile();
+        String[] cardString = ID.split(Transfer.SEPARATOR);
+        for (int i = 0; i < cardString.length; i++){
+            String[] cardStuff = cardString[i].split(":");
+            if (containsDigit(cardStuff[0]) && containsDigit(cardStuff[1])) {
+                int suit = Integer.parseInt(cardStuff[0]);
+                int number = Integer.parseInt(cardStuff[1]);
+                Card card = new Card(suit, number);
+                pile.addCard(card);
+            }
+
+        }
+        return pile;
+    }
+
+    public static final boolean containsDigit(String s) {
+        boolean containsDigit = false;
+
+        if (s != null && !s.isEmpty()) {
+            for (char c : s.toCharArray()) {
+                if (containsDigit = Character.isDigit(c)) {
+                    break;
+                }
+            }
+        }
+
+        return containsDigit;
     }
 
     public CardPile getCardPile(String ID){

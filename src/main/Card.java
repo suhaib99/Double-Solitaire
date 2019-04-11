@@ -23,6 +23,8 @@ public class Card extends Object{
 
     private boolean faceUp;
 
+    private int team;
+
     private boolean isHeld = false;
 
     // 0: Red, 1: Black
@@ -54,6 +56,14 @@ public class Card extends Object{
 
     int getNumber() {
         return this.rank;
+    }
+
+    public int getTeam() {
+        return team;
+    }
+
+    public void setTeam(int team) {
+        this.team = team;
     }
 
     int getSuit() {
@@ -132,6 +142,7 @@ public class Card extends Object{
                 return cardImage;
             } else if (team == 2) {
                 cardImage = new Image(new FileInputStream("Double-Solitaire/src/res/Decks/pngs/redBack.png"));
+                return cardImage;
             }
         } catch (java.io.FileNotFoundException e) {
             System.out.println("File Not Found");

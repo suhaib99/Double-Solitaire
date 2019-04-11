@@ -5,6 +5,10 @@ public class FoundationPile extends CardPile {
     FoundationPile(int ID) {
         setID("F" + ID);
     }
+    FoundationPile(int ID, CardPile pile){
+        setID("F"+ID);
+        super.addCard(pile.getCardList());
+    }
 
     @Override
     public boolean canAccept(Card aCard) {
